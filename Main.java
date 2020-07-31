@@ -24,23 +24,23 @@ public class Main {
             .compile("href=\"(.*?)\"");
 
     public static void main(String args[]) {
-        // Scanner userInput = new Scanner(System.in);
-        // System.out.print("Enter filename: ");
-        // ArrayList<String> urls = readFile(userInput.nextLine());
-        // userInput.close();
-        // getUrlInfo(urls);
-        try {
-            String id = getID("https://www.youtube.com/watch?v=l0U7SxXHkPY");
-            String converter = loadConverter(id);
-            String mp3url = getMP3URL(converter);
-            try {
-                downloadStreamData(mp3url, "test.mp3");
-            } catch (Exception e) {
+        Scanner userInput = new Scanner(System.in);
+        System.out.print("Enter filename: ");
+        ArrayList<String> urls = getUrlsFromFile(userInput.nextLine());
+        userInput.close();
 
-            }
-        } catch (Exception e) {
-            System.out.println("Failed");
-        }
+        // try {
+        // String id = getID("https://www.youtube.com/watch?v=l0U7SxXHkPY");
+        // String converter = loadConverter(id);
+        // String mp3url = getMP3URL(converter);
+        // try {
+        // downloadStreamData(mp3url, "test.mp3");
+        // } catch (Exception e) {
+
+        // }
+        // } catch (Exception e) {
+        // System.out.println("Failed");
+        // }
     }
 
     private static String getID(String youtubeUrl) {
@@ -121,8 +121,7 @@ public class Main {
         fout.close();
     }
 
-    private static ArrayList<String> readFile(String filename) {
-
+    private static ArrayList<String> getUrlsFromFile(String filename) {
         ArrayList<String> urls = new ArrayList<String>();
         try {
             FileInputStream fileInputStream = new FileInputStream(filename);
