@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.InputStream;
@@ -28,8 +29,10 @@ public class Main {
             // .compile("(?<=href=\\\")https{0,1}:\\/\\/s02.ytapivmp3\\.com\s*");
             // .compile("(?<=href=\\\")https{0,1}\\:\\/\\/(\\w|\\d){3}\\.ytapivmp3\\.com.+\\.mp3(?=\\\")");
             .compile("href=\"(.*?)\"");
+    private static final Pattern SONG_TITLE = Pattern.compile("<title>((.|\\n)*?)<\\/title>");
 
     public static void main(String args[]) {
+
         Scanner userInput = new Scanner(System.in);
         System.out.print("Enter filename: ");
         ArrayList<String> urls = getUrlsFromFile(userInput.nextLine());
@@ -37,20 +40,19 @@ public class Main {
         // For each url loop the following
         for (int i = 0; i < urls.size(); i++) {
             try {
-                Song songInfo = getSongInfo(urls.get(i));
+
                 String id = getID(urls.get(i));
                 String converter = loadConverter(id);
-                String mp3url = getMP3URL(converter);
-                downloadStreamData(mp3url, songInfo.songTitle + ".mp3");
-                // downloadStreamData(mp3url, "song_"+ i +".mp3"); // Put the song name here
-                // Hit the api to get song information
-                // updateInfo("C:\\Users\\joshv\\Desktop\\Github\\YoutubeConverter\\test.mp3");
+                ArrayList<String> urlTitle = getMp3UrlAndTitle(converter);
+                Song songInfo = getSongInfo(urlTitle.get(0));
+                // String songInfo = getSongInfo(urlTitle.get(0));
+                downloadStreamData(urlTitle.get(1), songInfo.songTitle + ".mp3");
+                // downloadStreamData(mp3url, "song_"+ i +".mp3"); // debugging
             } catch (Exception e) {
                 System.out.println("Failed to download song.");
             }
         }
     }
-
 
     // Hits the shazam api to get the song information
     private static Song getSongInfo(String keywords) {
@@ -71,26 +73,34 @@ public class Main {
                 content.append(inputLine);
             }
             bufferedReader.close();
-            con.disconnect(); 
-            return filterSongInfo(content); // Process the result here -- filter and get song information
+            con.disconnect();
+            return filterSongInfo(content); // Process the result here -- filter and get
+            // song information
         } catch (Exception e) {
             System.out.println("Failed to get song information.");
         }
+        return null;
     }
 
-    // Extract the keywords from the given title
-    private static extractKeywords(String keywords) {
-        // kiss%20the%20rain
-        // Should have this formatting
+    // Extract the keywords from the given title -- filter out "LYRICS"
+    private static String extractKeywords(String keywords) {
+        String key = keywords;
+        ArrayList<String> strip = new ArrayList<String>(Arrays.asList("lyrics", "LYRICS", "Lyrics", "-"));
+        for (String string : strip) {
+            if (keywords.contains(string)) {
+                key = key.replace(string, " ");
+            }
+        }
+        key = key.replace(" ", "%20");
+        return key;
     }
 
     // Get the right song information here?
-    private static Song filterSongInfo(String content) {
-
+    private static Song filterSongInfo(StringBuffer content) {
+        // Process the json result here (convert to class object for easier navigation?)
         return new Song();
     }
 
-    
     /**
      * The url pattern needs to be reworked so it only recognizes the important
      * download link. Right now it gets all the href tags and only takes the 5th one
@@ -99,16 +109,26 @@ public class Main {
      * @param html
      * @return
      */
-    private static String getMP3URL(String html) {
-        Matcher m = MP3_URL_PATTERN.matcher(html);
+    private static ArrayList<String> getMp3UrlAndTitle(String html) {
+        ArrayList<String> song = new ArrayList<>();
+        Matcher linkMatcher = MP3_URL_PATTERN.matcher(html);
+        Matcher titleMatcher = SONG_TITLE.matcher(html);
         List<String> allMatches = new ArrayList<String>();
-        while (m.find()) {
-            allMatches.add(m.group());
+        String title = "";
+        while (linkMatcher.find()) {
+            allMatches.add(linkMatcher.group());
         }
+        if (titleMatcher.find()) {
+            title = titleMatcher.group(1);
+        }
+        title = title.substring(0, title.length() - 12); // 12 characters to remove "| 320YouTube" at the end of the
+                                                         // title string
         String link = allMatches.get(5);
         link = link.substring(6, link.length());
         link = link.substring(0, link.length() - 1);
-        return link;
+        song.add(title);
+        song.add(link);
+        return song;
     }
 
     ///////////////////////////// WORKS ///////////////////////////////////////
