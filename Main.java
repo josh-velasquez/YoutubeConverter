@@ -18,6 +18,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.List;
 
+// http://javamusictag.sourceforge.net/docs.htm
+
 public class Main {
     static String apiKey = "320d5e38afmsh4303ea9c1b8f26dp1ba115jsnee49a5333256";
 
@@ -33,12 +35,12 @@ public class Main {
         ArrayList<String> urls = getUrlsFromFile(userInput.nextLine());
         userInput.close();
         // For each url loop the following
-        for (String url : urls) {
+        for (int i = 0; i < urls.size(); i++) {
             try {
-                String id = getID(url);
+                String id = getID(urls.get(i));
                 String converter = loadConverter(id);
                 String mp3url = getMP3URL(converter); // Maybe get the song title from here
-                downloadStreamData(mp3url, "test.mp3"); // Put the song name here
+                downloadStreamData(mp3url, "song_"+ i +".mp3"); // Put the song name here
                 // Hit the api to get song information
                 // updateInfo("C:\\Users\\joshv\\Desktop\\Github\\YoutubeConverter\\test.mp3");
             } catch (Exception e) {
