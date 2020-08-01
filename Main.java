@@ -38,11 +38,11 @@ public class Main {
                 String id = getID(url);
                 String converter = loadConverter(id);
                 String mp3url = getMP3URL(converter); // Maybe get the song title from here
-                downloadStreamData(mp3url, "test.mp3");
+                downloadStreamData(mp3url, "test.mp3"); // Put the song name here
                 // Hit the api to get song information
                 // updateInfo("C:\\Users\\joshv\\Desktop\\Github\\YoutubeConverter\\test.mp3");
             } catch (Exception e) {
-                System.out.println("Failed");
+                System.out.println("Failed to download song.");
             }
         }
     }
