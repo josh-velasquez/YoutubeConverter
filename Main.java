@@ -37,10 +37,12 @@ public class Main {
         // For each url loop the following
         for (int i = 0; i < urls.size(); i++) {
             try {
+                Song songInfo = getSongInfo(urls.get(i));
                 String id = getID(urls.get(i));
                 String converter = loadConverter(id);
-                String mp3url = getMP3URL(converter); // Maybe get the song title from here
-                downloadStreamData(mp3url, "song_"+ i +".mp3"); // Put the song name here
+                String mp3url = getMP3URL(converter);
+                downloadStreamData(mp3url, songInfo.songTitle + ".mp3");
+                // downloadStreamData(mp3url, "song_"+ i +".mp3"); // Put the song name here
                 // Hit the api to get song information
                 // updateInfo("C:\\Users\\joshv\\Desktop\\Github\\YoutubeConverter\\test.mp3");
             } catch (Exception e) {
@@ -49,6 +51,46 @@ public class Main {
         }
     }
 
+
+    // Hits the shazam api to get the song information
+    private static Song getSongInfo(String keywords) {
+        // https://www.baeldung.com/java-http-request
+        String rootUrl = "https://shazam.p.rapidapi.com/search?locale=en-US&offset=0&limit=5&term=";
+        try {
+            URL url = new URL(rootUrl + extractKeywords(keywords));
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("x-rapidapi-host", "shazam.p.rapidapi.com");
+            con.setRequestProperty("x-rapidapi-key", apiKey);
+
+            // int status = con.getResponseCode();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while ((inputLine = bufferedReader.readLine()) != null) {
+                content.append(inputLine);
+            }
+            bufferedReader.close();
+            con.disconnect(); 
+            return filterSongInfo(content); // Process the result here -- filter and get song information
+        } catch (Exception e) {
+            System.out.println("Failed to get song information.");
+        }
+    }
+
+    // Extract the keywords from the given title
+    private static extractKeywords(String keywords) {
+        // kiss%20the%20rain
+        // Should have this formatting
+    }
+
+    // Get the right song information here?
+    private static Song filterSongInfo(String content) {
+
+        return new Song();
+    }
+
+    
     /**
      * The url pattern needs to be reworked so it only recognizes the important
      * download link. Right now it gets all the href tags and only takes the 5th one
@@ -67,41 +109,6 @@ public class Main {
         link = link.substring(6, link.length());
         link = link.substring(0, link.length() - 1);
         return link;
-    }
-
-    // Hits the
-    private static void getUrlInfo(ArrayList<String> urls) {
-
-        // https://www.baeldung.com/java-http-request
-        try {
-            URL url = new URL("http://example.com");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("x-rapidapi-host", "shazam.p.rapidapi.com");
-            con.setRequestProperty("x-rapidapi-key", apiKey);
-
-            // int status = con.getResponseCode();
-
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer content = new StringBuffer();
-            while ((inputLine = bufferedReader.readLine()) != null) {
-                content.append(inputLine);
-            }
-            bufferedReader.close();
-            con.disconnect();
-            System.out.println(content);
-        } catch (Exception e) {
-
-        }
-
-        // OkHttpClient client = new OkHttpClient();
-
-        // Request request = new Request.Builder()
-        // .url("https://shazam.p.rapidapi.com/songs/get-details?locale=en-US&key=40333609").get()
-        // .addHeader("x-rapidapi-host", "shazam.p.rapidapi.com").addHeader().build();
-
-        // Response response = client.newCall(request).execute();
     }
 
     ///////////////////////////// WORKS ///////////////////////////////////////
