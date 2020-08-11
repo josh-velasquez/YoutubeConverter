@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.io.InputStream;
 import java.io.FileOutputStream;
 import java.io.File;
@@ -32,25 +36,70 @@ public class Main {
     private static final Pattern SONG_TITLE = Pattern.compile("<title>((.|\\n)*?)<\\/title>");
 
     public static void main(String args[]) {
-
         Scanner userInput = new Scanner(System.in);
         System.out.print("Enter filename: ");
         ArrayList<String> urls = getUrlsFromFile(userInput.nextLine());
         userInput.close();
-        // For each url loop the following
+
         for (int i = 0; i < urls.size(); i++) {
             try {
-
                 String id = getID(urls.get(i));
                 String converter = loadConverter(id);
                 ArrayList<String> urlTitle = getMp3UrlAndTitle(converter);
+
+                // Calls an api to get the song information (title, artist, album)
                 Song songInfo = getSongInfo(urlTitle.get(0));
-                // String songInfo = getSongInfo(urlTitle.get(0));
-                downloadStreamData(urlTitle.get(1), songInfo.songTitle + ".mp3");
-                // downloadStreamData(mp3url, "song_"+ i +".mp3"); // debugging
+
+                // System.out.println("TITLE: " + songInfo.songTitle);
+                // System.out.println("ARTIST: " + songInfo.artist);
+                // System.out.println("ALBUM: " + songInfo.albumTitle);
+
+                // Downloads the song into the current directory
+                // downloadStreamData(urlTitle.get(1), songInfo.songTitle + ".mp3");
+
+                // Move the folder into the directory of the album and then updates the song
+                // file information
+                // updateInfo(sortSong(songInfo), songInfo);
+
             } catch (Exception e) {
                 System.out.println("Failed to download song.");
             }
+        }
+    }
+
+    private static String sortSong(Song song) {
+        String currentDir = System.getProperty("user.dir");
+        String albumDir = currentDir + "\\" + song.albumTitle;
+        String songSource = currentDir + "\\" + song.songTitle + ".mp3";
+        String songDest = albumDir + "\\" + song.songTitle + ".mp3";
+        File newDir = new File(albumDir);
+        if (!newDir.exists()) {
+            try {
+                newDir.mkdir();
+                moveFile(Paths.get(songSource), Paths.get(songDest));
+            } catch (Exception e) {
+                System.out.println("Failed to create new album folder: " + e);
+            }
+        } else {
+            moveFile(Paths.get(songSource), Paths.get(songDest));
+        }
+        return songDest;
+    }
+
+    /**
+     * Moves the file to a new destination
+     * 
+     * @param source
+     * @param destination
+     */
+    private static void moveFile(Path source, Path destination) {
+        try {
+            Path fileMoved = Files.move(source, destination);
+            if (fileMoved == null) {
+                System.out.println("Failed to move file to folder.");
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to move file to folder: " + e);
         }
     }
 
@@ -92,12 +141,15 @@ public class Main {
             }
         }
         key = key.replace(" ", "%20");
+        System.out.println("KEY HERE: " + key);
         return key;
     }
 
     // Get the right song information here?
     private static Song filterSongInfo(StringBuffer content) {
+
         // Process the json result here (convert to class object for easier navigation?)
+        System.out.println("CONTENT: " + content);
         return new Song();
     }
 

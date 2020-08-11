@@ -1,0 +1,409 @@
+{
+    "tracks": {
+        "hits": [
+            {
+                "track": {
+                    "layout": "5",
+                    "type": "MUSIC",
+                    "key": "458033400",
+                    "title": "Robbery",
+                    "subtitle": "Juice WRLD",
+                    "share": {
+                        "subject": "Robbery - Juice WRLD",
+                        "text": "I used Shazam to discover Robbery by Juice WRLD.",
+                        "href": "https://www.shazam.com/track/458033400/robbery",
+                        "image": "https://images.shazam.com/coverart/t458033400-i1451739590_s400.jpg",
+                        "twitter": "I used @Shazam to discover Robbery by Juice WRLD.",
+                        "html": "https://www.shazam.com/snippets/email-share/458033400?lang=en-US&country=US",
+                        "avatar": "https://is1-ssl.mzstatic.com/image/thumb/Features114/v4/6c/c4/eb/6cc4eb71-dee5-7f8b-dc9d-0613ab5df856/mzl.gwhtpegi.jpg/800x800bb.jpeg",
+                        "snapchat": "https://www.shazam.com/partner/sc/track/458033400"
+                    },
+                    "images": {
+                        "background": "https://is1-ssl.mzstatic.com/image/thumb/Features114/v4/6c/c4/eb/6cc4eb71-dee5-7f8b-dc9d-0613ab5df856/mzl.gwhtpegi.jpg/800x800bb.jpeg",
+                        "coverart": "https://images.shazam.com/coverart/t458033400-b1451739590_s400.jpg",
+                        "coverarthq": "https://images.shazam.com/coverart/t458033400-b1451739590_s800.jpg"
+                    },
+                    "hub": {
+                        "type": "APPLEMUSIC",
+                        "image": "https://images.shazam.com/static/icons/hub/ios/v5/applemusic_{scalefactor}.png",
+                        "actions": [
+                            {
+                                "name": "apple",
+                                "type": "applemusicplay",
+                                "id": "1451739590"
+                            },
+                            {
+                                "name": "apple",
+                                "type": "uri",
+                                "uri": "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview114/v4/d7/c3/87/d7c3876a-630b-1f76-b76c-f66492b42c3f/mzaf_4577020421994407548.plus.aac.p.m4a"
+                            }
+                        ],
+                        "options": [
+                            {
+                                "caption": "OPEN",
+                                "actions": [
+                                    {
+                                        "name": "hub:applemusic:deeplink",
+                                        "type": "applemusicopen",
+                                        "uri": "https://music.apple.com/us/album/robbery/1451739576?i=1451739590&uo=4&at=1001l4DI&itscg=30201&ct=5348615A-616D-3235-3830-44754D6D5973&mttnagencyid=769459046716559743&mttnsiteid=125115&mttn3pid=a_custom_779816081798873874&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&app=music&itsct=Shazam_ios"
+                                    },
+                                    {
+                                        "name": "hub:applemusic:deeplink",
+                                        "type": "uri",
+                                        "uri": "https://music.apple.com/us/album/robbery/1451739576?i=1451739590&uo=4&at=1001l4DI&itscg=30201&ct=5348615A-616D-3235-3830-44754D6D5973&mttnagencyid=769459046716559743&mttnsiteid=125115&mttn3pid=a_custom_779816081798873874&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&app=music&itsct=Shazam_ios"
+                                    }
+                                ],
+                                "beacondata": {
+                                    "type": "open",
+                                    "providername": "applemusic"
+                                },
+                                "image": "https://images.shazam.com/static/icons/hub/ios/v5/overflow-open-option_{scalefactor}.png",
+                                "listcaption": "Open in Apple Music",
+                                "overflowimage": "https://images.shazam.com/static/icons/hub/ios/v5/applemusic-overflow_{scalefactor}.png",
+                                "colouroverflowimage": false
+                            },
+                            {
+                                "caption": "BUY",
+                                "actions": [
+                                    {
+                                        "type": "itunesbuy",
+                                        "uri": "https://itunes.apple.com/us/album/robbery/1451739576?i=1451739590&uo=4&at=11l3eE&ct=5348615A-616D-3235-3830-44754D6D5973&app=itunes"
+                                    }
+                                ],
+                                "beacondata": {
+                                    "type": "buy",
+                                    "providername": "applemusic"
+                                },
+                                "image": "https://images.shazam.com/static/icons/hub/ios/v5/itunes-overflow-buy_{scalefactor}.png",
+                                "listcaption": "Buy on iTunes",
+                                "overflowimage": "https://images.shazam.com/static/icons/hub/ios/v5/itunes-overflow-buy_{scalefactor}.png",
+                                "colouroverflowimage": false
+                            }
+                        ],
+                        "providers": [
+                            {
+                                "caption": "Open in Spotify",
+                                "images": {
+                                    "overflow": "https://images.shazam.com/static/icons/hub/ios/v5/spotify-overflow_{scalefactor}.png",
+                                    "default": "https://images.shazam.com/static/icons/hub/ios/v5/spotify_{scalefactor}.png"
+                                },
+                                "actions": [
+                                    {
+                                        "name": "hub:spotify:deeplink",
+                                        "type": "uri",
+                                        "uri": "spotify:track:6Hj9jySrnFppAI0sEMCZpJ"
+                                    }
+                                ],
+                                "type": "SPOTIFY"
+                            },
+                            {
+                                "caption": "Open in Deezer",
+                                "images": {
+                                    "overflow": "https://images.shazam.com/static/icons/hub/ios/v5/deezer-overflow_{scalefactor}.png",
+                                    "default": "https://images.shazam.com/static/icons/hub/ios/v5/deezer_{scalefactor}.png"
+                                },
+                                "actions": [
+                                    {
+                                        "name": "hub:deezer:searchdeeplink",
+                                        "type": "uri",
+                                        "uri": "deezer-query://www.deezer.com/play?query=%7Btrack%3A%27Robbery%27%20artist%3A%27Juice+WRLD%27%7D"
+                                    }
+                                ],
+                                "type": "DEEZER"
+                            }
+                        ],
+                        "explicit": true,
+                        "displayname": "APPLE MUSIC"
+                    },
+                    "artists": [
+                        {
+                            "id": "204938490",
+                            "adamid": "1368733420"
+                        }
+                    ],
+                    "url": "https://www.shazam.com/track/458033400/robbery"
+                }
+            },
+            {
+                "track": {
+                    "layout": "5",
+                    "type": "MUSIC",
+                    "key": "462978023",
+                    "title": "Robbery (16-Bit Juice WRLD Emulation)",
+                    "subtitle": "Arcade Player",
+                    "share": {
+                        "subject": "Robbery (16-Bit Juice WRLD Emulation) - Arcade Player",
+                        "text": "I used Shazam to discover Robbery (16-Bit Juice WRLD Emulation) by Arcade Player.",
+                        "href": "https://www.shazam.com/track/462978023/robbery-16-bit-juice-wrld-emulation",
+                        "image": "https://images.shazam.com/coverart/t462978023-i1457946714_s400.jpg",
+                        "twitter": "I used @Shazam to discover Robbery (16-Bit Juice WRLD Emulation) by Arcade Player.",
+                        "html": "https://www.shazam.com/snippets/email-share/462978023?lang=en-US&country=US",
+                        "snapchat": "https://www.shazam.com/partner/sc/track/462978023"
+                    },
+                    "images": {
+                        "background": "https://images.shazam.com/coverart/t462978023-b1457946714_s800.jpg",
+                        "coverart": "https://images.shazam.com/coverart/t462978023-b1457946714_s400.jpg",
+                        "coverarthq": "https://images.shazam.com/coverart/t462978023-b1457946714_s800.jpg"
+                    },
+                    "hub": {
+                        "type": "APPLEMUSIC",
+                        "image": "https://images.shazam.com/static/icons/hub/ios/v5/applemusic_{scalefactor}.png",
+                        "actions": [
+                            {
+                                "name": "apple",
+                                "type": "applemusicplay",
+                                "id": "1457946714"
+                            },
+                            {
+                                "name": "apple",
+                                "type": "uri",
+                                "uri": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/a5/86/9f/a5869ff7-c0cf-0b60-aea7-dfbdc5fb6104/mzaf_2078024568914640915.plus.aac.p.m4a"
+                            }
+                        ],
+                        "options": [
+                            {
+                                "caption": "OPEN",
+                                "actions": [
+                                    {
+                                        "name": "hub:applemusic:deeplink",
+                                        "type": "applemusicopen",
+                                        "uri": "https://music.apple.com/us/album/robbery-16-bit-juice-wrld-emulation/1457946626?i=1457946714&uo=5&at=1001l4DI&itscg=30201&ct=5348615A-616D-3235-3830-44754D6D5973&mttnagencyid=769459046716559743&mttnsiteid=125115&mttn3pid=a_custom_779816081798873874&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&app=music&itsct=Shazam_ios"
+                                    },
+                                    {
+                                        "name": "hub:applemusic:deeplink",
+                                        "type": "uri",
+                                        "uri": "https://music.apple.com/us/album/robbery-16-bit-juice-wrld-emulation/1457946626?i=1457946714&uo=5&at=1001l4DI&itscg=30201&ct=5348615A-616D-3235-3830-44754D6D5973&mttnagencyid=769459046716559743&mttnsiteid=125115&mttn3pid=a_custom_779816081798873874&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&app=music&itsct=Shazam_ios"
+                                    }
+                                ],
+                                "beacondata": {
+                                    "type": "open",
+                                    "providername": "applemusic"
+                                },
+                                "image": "https://images.shazam.com/static/icons/hub/ios/v5/overflow-open-option_{scalefactor}.png",
+                                "listcaption": "Open in Apple Music",
+                                "overflowimage": "https://images.shazam.com/static/icons/hub/ios/v5/applemusic-overflow_{scalefactor}.png",
+                                "colouroverflowimage": false
+                            },
+                            {
+                                "caption": "BUY",
+                                "actions": [
+                                    {
+                                        "type": "itunesbuy",
+                                        "uri": "https://itunes.apple.com/us/album/robbery-16-bit-juice-wrld-emulation/1457946626?i=1457946714&uo=5&at=11l3eE&ct=5348615A-616D-3235-3830-44754D6D5973&app=itunes"
+                                    }
+                                ],
+                                "beacondata": {
+                                    "type": "buy",
+                                    "providername": "applemusic"
+                                },
+                                "image": "https://images.shazam.com/static/icons/hub/ios/v5/itunes-overflow-buy_{scalefactor}.png",
+                                "listcaption": "Buy on iTunes",
+                                "overflowimage": "https://images.shazam.com/static/icons/hub/ios/v5/itunes-overflow-buy_{scalefactor}.png",
+                                "colouroverflowimage": false
+                            }
+                        ],
+                        "providers": [
+                            {
+                                "caption": "Open in Spotify",
+                                "images": {
+                                    "overflow": "https://images.shazam.com/static/icons/hub/ios/v5/spotify-overflow_{scalefactor}.png",
+                                    "default": "https://images.shazam.com/static/icons/hub/ios/v5/spotify_{scalefactor}.png"
+                                },
+                                "actions": [
+                                    {
+                                        "name": "hub:spotify:androidsearchdeeplink",
+                                        "type": "intent",
+                                        "uri": "intent:#Intent;action=android.media.action.MEDIA_PLAY_FROM_SEARCH;component=com.spotify.music/.MainActivity;S.referrer=Shazam;S.query=Robbery%20%2816-Bit%20Juice%20WRLD%20Emulation%29%20Arcade%20Player;end"
+                                    },
+                                    {
+                                        "name": "hub:spotify:iossearchdeeplink",
+                                        "type": "uri",
+                                        "uri": "spotify:search:Robbery%20%2816-Bit%20Juice%20WRLD%20Emulation%29%20Arcade%20Player"
+                                    }
+                                ],
+                                "type": "SPOTIFY"
+                            },
+                            {
+                                "caption": "Open in Deezer",
+                                "images": {
+                                    "overflow": "https://images.shazam.com/static/icons/hub/ios/v5/deezer-overflow_{scalefactor}.png",
+                                    "default": "https://images.shazam.com/static/icons/hub/ios/v5/deezer_{scalefactor}.png"
+                                },
+                                "actions": [
+                                    {
+                                        "name": "hub:deezer:searchdeeplink",
+                                        "type": "uri",
+                                        "uri": "deezer-query://www.deezer.com/play?query=%7Btrack%3A%27Robbery+%2816-Bit+Juice+WRLD+Emulation%29%27%20artist%3A%27Arcade+Player%27%7D"
+                                    }
+                                ],
+                                "type": "DEEZER"
+                            }
+                        ],
+                        "explicit": false,
+                        "displayname": "APPLE MUSIC"
+                    },
+                    "artists": [
+                        {
+                            "id": "204971457",
+                            "adamid": "1370780011"
+                        }
+                    ],
+                    "url": "https://www.shazam.com/track/462978023/robbery-16-bit-juice-wrld-emulation"
+                }
+            },
+            {
+                "track": {
+                    "layout": "5",
+                    "type": "MUSIC",
+                    "key": "462275582",
+                    "title": "Robbery (8-Bit Juice WRLD Emulation)",
+                    "subtitle": "8-Bit Arcade",
+                    "share": {
+                        "subject": "Robbery (8-Bit Juice WRLD Emulation) - 8-Bit Arcade",
+                        "text": "I used Shazam to discover Robbery (8-Bit Juice WRLD Emulation) by 8-Bit Arcade.",
+                        "href": "https://www.shazam.com/track/462275582/robbery-8-bit-juice-wrld-emulation",
+                        "image": "https://images.shazam.com/coverart/t462275582-i1457160471_s400.jpg",
+                        "twitter": "I used @Shazam to discover Robbery (8-Bit Juice WRLD Emulation) by 8-Bit Arcade.",
+                        "html": "https://www.shazam.com/snippets/email-share/462275582?lang=en-US&country=US",
+                        "snapchat": "https://www.shazam.com/partner/sc/track/462275582"
+                    },
+                    "images": {
+                        "background": "https://images.shazam.com/coverart/t462275582-b1457160471_s800.jpg",
+                        "coverart": "https://images.shazam.com/coverart/t462275582-b1457160471_s400.jpg",
+                        "coverarthq": "https://images.shazam.com/coverart/t462275582-b1457160471_s800.jpg"
+                    },
+                    "hub": {
+                        "type": "APPLEMUSIC",
+                        "image": "https://images.shazam.com/static/icons/hub/ios/v5/applemusic_{scalefactor}.png",
+                        "actions": [
+                            {
+                                "name": "apple",
+                                "type": "applemusicplay",
+                                "id": "1457160471"
+                            },
+                            {
+                                "name": "apple",
+                                "type": "uri",
+                                "uri": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/d2/ae/2a/d2ae2a5a-c63f-c7e4-a718-a76a100df1a0/mzaf_6302480750323172999.plus.aac.p.m4a"
+                            }
+                        ],
+                        "options": [
+                            {
+                                "caption": "OPEN",
+                                "actions": [
+                                    {
+                                        "name": "hub:applemusic:deeplink",
+                                        "type": "applemusicopen",
+                                        "uri": "https://music.apple.com/us/album/robbery-8-bit-juice-wrld-emulation/1457160161?i=1457160471&uo=5&at=1001l4DI&itscg=30201&ct=5348615A-616D-3235-3830-44754D6D5973&mttnagencyid=769459046716559743&mttnsiteid=125115&mttn3pid=a_custom_779816081798873874&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&app=music&itsct=Shazam_ios"
+                                    },
+                                    {
+                                        "name": "hub:applemusic:deeplink",
+                                        "type": "uri",
+                                        "uri": "https://music.apple.com/us/album/robbery-8-bit-juice-wrld-emulation/1457160161?i=1457160471&uo=5&at=1001l4DI&itscg=30201&ct=5348615A-616D-3235-3830-44754D6D5973&mttnagencyid=769459046716559743&mttnsiteid=125115&mttn3pid=a_custom_779816081798873874&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&app=music&itsct=Shazam_ios"
+                                    }
+                                ],
+                                "beacondata": {
+                                    "type": "open",
+                                    "providername": "applemusic"
+                                },
+                                "image": "https://images.shazam.com/static/icons/hub/ios/v5/overflow-open-option_{scalefactor}.png",
+                                "listcaption": "Open in Apple Music",
+                                "overflowimage": "https://images.shazam.com/static/icons/hub/ios/v5/applemusic-overflow_{scalefactor}.png",
+                                "colouroverflowimage": false
+                            },
+                            {
+                                "caption": "BUY",
+                                "actions": [
+                                    {
+                                        "type": "itunesbuy",
+                                        "uri": "https://itunes.apple.com/us/album/robbery-8-bit-juice-wrld-emulation/1457160161?i=1457160471&uo=5&at=11l3eE&ct=5348615A-616D-3235-3830-44754D6D5973&app=itunes"
+                                    }
+                                ],
+                                "beacondata": {
+                                    "type": "buy",
+                                    "providername": "applemusic"
+                                },
+                                "image": "https://images.shazam.com/static/icons/hub/ios/v5/itunes-overflow-buy_{scalefactor}.png",
+                                "listcaption": "Buy on iTunes",
+                                "overflowimage": "https://images.shazam.com/static/icons/hub/ios/v5/itunes-overflow-buy_{scalefactor}.png",
+                                "colouroverflowimage": false
+                            }
+                        ],
+                        "providers": [
+                            {
+                                "caption": "Open in Spotify",
+                                "images": {
+                                    "overflow": "https://images.shazam.com/static/icons/hub/ios/v5/spotify-overflow_{scalefactor}.png",
+                                    "default": "https://images.shazam.com/static/icons/hub/ios/v5/spotify_{scalefactor}.png"
+                                },
+                                "actions": [
+                                    {
+                                        "name": "hub:spotify:androidsearchdeeplink",
+                                        "type": "intent",
+                                        "uri": "intent:#Intent;action=android.media.action.MEDIA_PLAY_FROM_SEARCH;component=com.spotify.music/.MainActivity;S.referrer=Shazam;S.query=Robbery%20%288-Bit%20Juice%20WRLD%20Emulation%29%208-Bit%20Arcade;end"
+                                    },
+                                    {
+                                        "name": "hub:spotify:iossearchdeeplink",
+                                        "type": "uri",
+                                        "uri": "spotify:search:Robbery%20%288-Bit%20Juice%20WRLD%20Emulation%29%208-Bit%20Arcade"
+                                    }
+                                ],
+                                "type": "SPOTIFY"
+                            },
+                            {
+                                "caption": "Open in Deezer",
+                                "images": {
+                                    "overflow": "https://images.shazam.com/static/icons/hub/ios/v5/deezer-overflow_{scalefactor}.png",
+                                    "default": "https://images.shazam.com/static/icons/hub/ios/v5/deezer_{scalefactor}.png"
+                                },
+                                "actions": [
+                                    {
+                                        "name": "hub:deezer:searchdeeplink",
+                                        "type": "uri",
+                                        "uri": "deezer-query://www.deezer.com/play?query=%7Btrack%3A%27Robbery+%288-Bit+Juice+WRLD+Emulation%29%27%20artist%3A%278-Bit+Arcade%27%7D"
+                                    }
+                                ],
+                                "type": "DEEZER"
+                            }
+                        ],
+                        "explicit": false,
+                        "displayname": "APPLE MUSIC"
+                    },
+                    "artists": [
+                        {
+                            "id": "45532887",
+                            "adamid": "608074618"
+                        }
+                    ],
+                    "url": "https://www.shazam.com/track/462275582/robbery-8-bit-juice-wrld-emulation"
+                }
+            }
+        ]
+    },
+    "artists": {
+        "hits": [
+            {
+                "artist": {
+                    "avatar": "https://is1-ssl.mzstatic.com/image/thumb/Features114/v4/6c/c4/eb/6cc4eb71-dee5-7f8b-dc9d-0613ab5df856/mzl.gwhtpegi.jpg/800x800bb.jpeg",
+                    "id": "204938490",
+                    "name": "Juice WRLD",
+                    "verified": false
+                }
+            },
+            {
+                "artist": {
+                    "id": "204971457",
+                    "name": "Arcade Player",
+                    "verified": false
+                }
+            },
+            {
+                "artist": {
+                    "id": "45532887",
+                    "name": "8-Bit Arcade",
+                    "verified": false
+                }
+            }
+        ]
+    }
+}
