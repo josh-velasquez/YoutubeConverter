@@ -1,16 +1,12 @@
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.util.Scanner;
-import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.io.InputStream;
 import java.io.FileOutputStream;
 import java.io.File;
@@ -33,7 +29,6 @@ public class Main {
             // .compile("(?<=href=\\\")https{0,1}:\\/\\/s02.ytapivmp3\\.com\s*");
             // .compile("(?<=href=\\\")https{0,1}\\:\\/\\/(\\w|\\d){3}\\.ytapivmp3\\.com.+\\.mp3(?=\\\")");
             .compile("href=\"(.*?)\"");
-    private static final Pattern SONG_TITLE = Pattern.compile("<title>((.|\\n)*?)<\\/title>");
 
     public static void main(String args[]) {
         Scanner userInput = new Scanner(System.in);
@@ -43,23 +38,22 @@ public class Main {
 
         for (int i = 0; i < urls.size(); i++) {
             try {
-                String id = getID(urls.get(i));
+                String[] songInfo = getSongInfo(urls.get(i));
+                String id = getID(songInfo[0]);
                 String converter = loadConverter(id);
-                ArrayList<String> urlTitle = getMp3UrlAndTitle(converter);
-
-                // Calls an api to get the song information (title, artist, album)
-                Song songInfo = getSongInfo(urlTitle.get(0));
-
-                // System.out.println("TITLE: " + songInfo.songTitle);
-                // System.out.println("ARTIST: " + songInfo.artist);
-                // System.out.println("ALBUM: " + songInfo.albumTitle);
-
+                String url = getMp3Url(converter);
+                Song song = new Song();
+                song.songTitle = songInfo[1];
+                song.artist = songInfo[2];
+                if (songInfo.length > 3) {
+                    song.albumTitle = songInfo[3];
+                }
                 // Downloads the song into the current directory
-                // downloadStreamData(urlTitle.get(1), songInfo.songTitle + ".mp3");
+                downloadStreamData(url, song.songTitle + ".mp3");
 
                 // Move the folder into the directory of the album and then updates the song
                 // file information
-                // updateInfo(sortSong(songInfo), songInfo);
+                updateInfo(sortSong(song), song);
 
             } catch (Exception e) {
                 System.out.println("Failed to download song.");
@@ -67,10 +61,17 @@ public class Main {
         }
     }
 
+    private static String[] getSongInfo(String info) {
+        return info.split("--");
+    }
+
     private static String sortSong(Song song) {
         String currentDir = System.getProperty("user.dir");
         String albumDir = currentDir + "\\" + song.albumTitle;
         String songSource = currentDir + "\\" + song.songTitle + ".mp3";
+        if (song.albumTitle == null) {
+            return songSource;
+        }
         String songDest = albumDir + "\\" + song.songTitle + ".mp3";
         File newDir = new File(albumDir);
         if (!newDir.exists()) {
@@ -103,56 +104,6 @@ public class Main {
         }
     }
 
-    // Hits the shazam api to get the song information
-    private static Song getSongInfo(String keywords) {
-        // https://www.baeldung.com/java-http-request
-        String rootUrl = "https://shazam.p.rapidapi.com/search?locale=en-US&offset=0&limit=5&term=";
-        try {
-            URL url = new URL(rootUrl + extractKeywords(keywords));
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("x-rapidapi-host", "shazam.p.rapidapi.com");
-            con.setRequestProperty("x-rapidapi-key", apiKey);
-
-            // int status = con.getResponseCode();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer content = new StringBuffer();
-            while ((inputLine = bufferedReader.readLine()) != null) {
-                content.append(inputLine);
-            }
-            bufferedReader.close();
-            con.disconnect();
-            return filterSongInfo(content); // Process the result here -- filter and get
-            // song information
-        } catch (Exception e) {
-            System.out.println("Failed to get song information.");
-        }
-        return null;
-    }
-
-    // Extract the keywords from the given title -- filter out "LYRICS"
-    private static String extractKeywords(String keywords) {
-        String key = keywords;
-        ArrayList<String> strip = new ArrayList<String>(Arrays.asList("lyrics", "LYRICS", "Lyrics", "-"));
-        for (String string : strip) {
-            if (keywords.contains(string)) {
-                key = key.replace(string, " ");
-            }
-        }
-        key = key.replace(" ", "%20");
-        System.out.println("KEY HERE: " + key);
-        return key;
-    }
-
-    // Get the right song information here?
-    private static Song filterSongInfo(StringBuffer content) {
-
-        // Process the json result here (convert to class object for easier navigation?)
-        System.out.println("CONTENT: " + content);
-        return new Song();
-    }
-
     /**
      * The url pattern needs to be reworked so it only recognizes the important
      * download link. Right now it gets all the href tags and only takes the 5th one
@@ -161,26 +112,16 @@ public class Main {
      * @param html
      * @return
      */
-    private static ArrayList<String> getMp3UrlAndTitle(String html) {
-        ArrayList<String> song = new ArrayList<>();
+    private static String getMp3Url(String html) {
         Matcher linkMatcher = MP3_URL_PATTERN.matcher(html);
-        Matcher titleMatcher = SONG_TITLE.matcher(html);
         List<String> allMatches = new ArrayList<String>();
-        String title = "";
         while (linkMatcher.find()) {
             allMatches.add(linkMatcher.group());
         }
-        if (titleMatcher.find()) {
-            title = titleMatcher.group(1);
-        }
-        title = title.substring(0, title.length() - 12); // 12 characters to remove "| 320YouTube" at the end of the
-                                                         // title string
         String link = allMatches.get(5);
         link = link.substring(6, link.length());
         link = link.substring(0, link.length() - 1);
-        song.add(title);
-        song.add(link);
-        return song;
+        return link;
     }
 
     ///////////////////////////// WORKS ///////////////////////////////////////
@@ -198,7 +139,9 @@ public class Main {
             ID3v2_3 tag = new ID3v2_3(file);
             tag.setSongTitle(songInfo.songTitle);
             tag.setLeadArtist(songInfo.artist);
-            tag.setAlbumTitle(songInfo.albumTitle);
+            if (songInfo.albumTitle != null) {
+                tag.setAlbumTitle(songInfo.albumTitle);
+            }
 
             // Save changes to mp3 file
             tag.write(file);
