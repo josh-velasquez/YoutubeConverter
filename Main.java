@@ -1,6 +1,5 @@
 import java.io.FileInputStream;
 import java.util.Scanner;
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -12,14 +11,10 @@ import java.io.FileOutputStream;
 import java.io.File;
 import java.util.regex.Pattern;
 
-import org.farng.mp3.id3.ID3v2_3;
-
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.List;
-
-// http://javamusictag.sourceforge.net/docs.htm
 
 public class Main {
     static String apiKey = "320d5e38afmsh4303ea9c1b8f26dp1ba115jsnee49a5333256";
@@ -48,15 +43,16 @@ public class Main {
                 if (songInfo.length > 3) {
                     song.albumTitle = songInfo[3];
                 }
-                // Downloads the song into the current directory
+
+                // // Downloads the song into the current directory
                 downloadStreamData(url, song.songTitle + ".mp3");
 
                 // Move the folder into the directory of the album and then updates the song
                 // file information
-                updateInfo(sortSong(song), song);
+                sortSong(song);
 
             } catch (Exception e) {
-                System.out.println("Failed to download song.");
+                System.out.println("Failed to download song: " + urls.get(i) + ". Error: " + e);
             }
         }
     }
@@ -125,30 +121,6 @@ public class Main {
     }
 
     ///////////////////////////// WORKS ///////////////////////////////////////
-
-    /**
-     * Updates the information of the mp3 file based on the song info retrieved from
-     * API
-     * 
-     * @param songFileSource
-     * @param songInfo
-     */
-    private static void updateInfo(String songFileSource, Song songInfo) {
-        try {
-            RandomAccessFile file = new RandomAccessFile(songFileSource, "rw");
-            ID3v2_3 tag = new ID3v2_3(file);
-            tag.setSongTitle(songInfo.songTitle);
-            tag.setLeadArtist(songInfo.artist);
-            if (songInfo.albumTitle != null) {
-                tag.setAlbumTitle(songInfo.albumTitle);
-            }
-
-            // Save changes to mp3 file
-            tag.write(file);
-        } catch (Exception e) {
-            System.out.println("Failed to update song information.");
-        }
-    }
 
     /**
      * Gets all the url links from file input
