@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace YoutubeConverter
+﻿namespace YoutubeConverter
 {
-    enum Song
+    internal class Song
     {
-        Artist,
-        Title,
-       Album
+        public string Artist;
+        public string Title;
+        public string Album;
     }
 }

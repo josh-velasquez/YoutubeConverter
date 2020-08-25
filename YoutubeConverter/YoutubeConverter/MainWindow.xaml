@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Youtube Converter" Height="91.333" Width="460.889">
     <Grid Background="#FF264653">
-        <TextBox x:Name="urlTextBox" HorizontalAlignment="Left" Height="26" Margin="46,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="287" VerticalContentAlignment="Center" Foreground="#FFF4A261" Background="#FF645F53" />
+        <TextBox x:Name="urlTextBox" HorizontalAlignment="Left" Height="26" Margin="46,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" VerticalContentAlignment="Center" Foreground="#FFF4A261" Background="#FF645F53" />
         <Label Content="URL" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
         <Button Content="Convert" HorizontalAlignment="Left" Margin="338,10,0,0" VerticalAlignment="Top" Width="96" Height="26" Background="#FF2A9D8F" Foreground="#FF334B2F" Click="OnConvertClick" />
     </Grid>
