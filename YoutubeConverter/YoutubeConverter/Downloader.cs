@@ -5,15 +5,15 @@ namespace YoutubeConverter
 {
     internal class Downloader
     {
-        public string Download(string url)
+        public string Download(string url, string fileName)
         {
             string currentDir = Directory.GetCurrentDirectory();
-            string fileName = currentDir + "song.mp3";
+            string newFileName = currentDir + "\\" + fileName;
             using (var client = new WebClient())
             {
-                client.DownloadFile(url, fileName);
+                client.DownloadFile(url, newFileName);
             }
-            return "path";
+            return newFileName;
         }
     }
 }

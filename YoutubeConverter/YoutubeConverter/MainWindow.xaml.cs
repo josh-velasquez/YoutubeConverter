@@ -16,10 +16,16 @@ namespace YoutubeConverter
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Extracts the download url from the resulting html
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
         private string ExtractUrl(string html)
         {
-            Regex regex = new Regex("");
-            return "url";
+            //Regex regex = new Regex("href=\"(https:\\/\\/s03.ytapivmp3.*?)\"");
+            Regex regex = new Regex("href=\"(.*?)\"");
+            return regex.Matches(html)[5].Groups[1].Value;
         }
 
         /// <summary>
@@ -30,34 +36,53 @@ namespace YoutubeConverter
         private string GetYoutubeId(string url)
         {
             Regex regex = new Regex("(?<=v\\=|youtu\\.be\\/)\\w+");
-            MatchCollection matches = regex.Matches(url);
-            return matches[0].Value;
+            return regex.Matches(url)[0].Value;
         }
 
+        /// <summary>
+        /// Extracts the title of the YouTube video
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
         private string ExtractTitle(string html)
         {
-            return "Title";
+            Regex regex = new Regex("<title>(.*?) \\| 320YouTube<\\/title>");
+            return regex.Matches(html)[0].Groups[1].Value;
         }
 
         private void OnConvertClick(object sender, RoutedEventArgs e)
         {
-            string html;
+            string youtube320 = "https://www.320youtube.com/watch?v=";
             API api = new API();
             Downloader videoDownloader = new Downloader();
             Files file = new Files();
             try
             {
-                html = api.GetHtml(urlTextBox.Text);
+                // Extract youtube ID from url
+                string id = GetYoutubeId(urlTextBox.Text);
+
+                // Get the html page of the resulting api call to youtube 320
+                string html = api.GetHtml(youtube320 + id);
+
+                // Grab title of the song
                 string songTitle = ExtractTitle(html);
+
+                // Get the download url from the html page
                 string downloadUrl = ExtractUrl(html);
-                string filePath = videoDownloader.Download(downloadUrl);
-                Song songInfo = api.GetSongInfo(songTitle);
-                file.CreateAndMoveToAlbum(filePath, songInfo.Album);
+
+                //// Hit an api to get the song information
+                //Song songInfo = api.GetSongInfo(songTitle);
+
+                //// Download the mp3 file form the
+                string filePath = videoDownloader.Download(downloadUrl, "test.mp3");
+                Debug.WriteLine("FILEPATH: " + filePath);
+
+                file.CreateAndMoveToAlbum(filePath, "test.mp3", "songInfo.Album");
             }
             catch (Exception error)
             {
                 Debug.WriteLine("Failed to fetch HTML data: " + error);
-                
             }
         }
     }
+}
