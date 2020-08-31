@@ -25,7 +25,7 @@ namespace YoutubeConverter
         {
             //Regex regex = new Regex("href=\"(https:\\/\\/s03.ytapivmp3.*?)\"");
             Regex regex = new Regex("href=\"(.*?)\"");
-            return regex.Matches(html)[5].Groups[1].Value;
+            return regex.Matches(html)[6].Groups[1].Value;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace YoutubeConverter
             Files file = new Files();
             try
             {
-                // Extract youtube ID from url
+                //Extract youtube ID from url
                 string id = GetYoutubeId(urlTextBox.Text);
 
                 // Get the html page of the resulting api call to youtube 320
@@ -70,14 +70,19 @@ namespace YoutubeConverter
                 // Get the download url from the html page
                 string downloadUrl = ExtractUrl(html);
 
-                //// Hit an api to get the song information
-                //Song songInfo = api.GetSongInfo(songTitle);
+                // --------------------------------------------------------------------------------------------------------
+                // Hit an api to get the song information
+                Song songInfo = api.GetSongInfo(songTitle, "320d5e38afmsh4303ea9c1b8f26dp1ba115jsnee49a5333256");
+                // --------------------------------------------------------------------------------------------------------
 
-                //// Download the mp3 file form the
-                string filePath = videoDownloader.Download(downloadUrl, "test.mp3");
-                Debug.WriteLine("FILEPATH: " + filePath);
+                // Download the mp3 file form the
+                string filePath = videoDownloader.Download(downloadUrl, songInfo.Title);
 
-                file.CreateAndMoveToAlbum(filePath, "test.mp3", "songInfo.Album");
+                // Move the song to its album folder
+                string songFilePath = file.CreateAndMoveToAlbum(filePath, songInfo.Title, songInfo.Album);
+
+                // Update the file information
+                Mp3.UpdateSongInformation(filePath, songInfo);
             }
             catch (Exception error)
             {

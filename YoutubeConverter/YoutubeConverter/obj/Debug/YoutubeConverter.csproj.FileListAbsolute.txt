@@ -1,7 +1,6 @@
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\YoutubeConverter.exe.config
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\YoutubeConverter.exe
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\YoutubeConverter.pdb
-C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Debug\YoutubeConverter.csprojAssemblyReference.cache
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Debug\MainWindow.g.cs
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Debug\App.g.cs
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Debug\YoutubeConverter_MarkupCompile.cache
@@ -13,3 +12,10 @@ C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Debug\YoutubeConverter.csproj.CoreCompileInputs.cache
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Debug\YoutubeConverter.exe
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Debug\YoutubeConverter.pdb
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Debug\YoutubeConverter.csprojAssemblyReference.cache
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\Id3Lib.dll
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\Mp3Lib.dll
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\Id3Lib.pdb
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\Mp3Lib.pdb
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Debug\YoutubeConverter.csproj.CopyComplete

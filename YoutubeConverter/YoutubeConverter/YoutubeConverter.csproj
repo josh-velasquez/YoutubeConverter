@@ -35,6 +35,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\csid3lib-v0.6-src\id3lib\Mp3Lib\bin\Release\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Id3Lib">
+      <HintPath>..\..\csid3lib-v0.6-src\id3lib\Mp3Lib\bin\Release\Id3Lib.dll</HintPath>
+    </Reference>
+    <Reference Include="Mp3Lib">
+      <HintPath>..\..\csid3lib-v0.6-src\id3lib\Mp3Lib\bin\Release\Mp3Lib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Mp3.cs" />
     <Compile Include="Song.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
