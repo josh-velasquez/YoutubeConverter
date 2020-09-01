@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -39,13 +42,19 @@ namespace YoutubeConverter
 
             string html = GetHtml(searchUrl, headers);
             Song song = GetSongInfo(html);
-            return new Song();
+            return song;
         }
 
         private Song GetSongInfo(string html)
         {
-            // Convert html result to json object
-            return new Song();
+            Song song = new Song();
+            dynamic result = JsonConvert.DeserializeObject(html);
+            string title = result.tracks.hits[0].track.title;
+            string artist = result.tracks.hits[0].track.subtitle;
+            song.Title = title;
+            song.Album = "";
+            song.Artist = artist;
+            return song;
         }
 
         private string ExtractTerms(string title)

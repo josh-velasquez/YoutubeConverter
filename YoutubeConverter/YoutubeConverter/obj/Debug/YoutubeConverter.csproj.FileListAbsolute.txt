@@ -19,3 +19,5 @@ C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\Id3Lib.pdb
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\Mp3Lib.pdb
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Debug\YoutubeConverter.csproj.CopyComplete
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\Newtonsoft.Json.dll
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Debug\Newtonsoft.Json.xml
