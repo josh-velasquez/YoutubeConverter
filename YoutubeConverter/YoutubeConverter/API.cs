@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -33,16 +31,26 @@ namespace YoutubeConverter
 
         public Song GetSongInfo(string title, string apiKey)
         {
-            string rooturl = "https://shazam.p.rapidapi.com/search?locale=en-US&offset=0&limit=5&term=";
-            string searchUrl = rooturl + ExtractTerms(title);
+            string searchTrackRootUrl = "https://shazam.p.rapidapi.com/search?locale=en-US&offset=0&limit=5&term=";
+            string albumRootUrl = "https://shazam.p.rapidapi.com/songs/get-details?locale=en-US&key=";
+            string searchTrackUrl = searchTrackRootUrl + ExtractTerms(title);
             List<KeyValuePair<string, string>> headers = new List<KeyValuePair<string, string>>() {
                 new KeyValuePair<string, string>("x-rapidapi-host", "shazam.p.rapidapi.com"),
                 new KeyValuePair<string, string>("x-rapidapi-key", apiKey)
             };
-
-            string html = GetHtml(searchUrl, headers);
-            Song song = GetSongInfo(html);
+            string songInfo = GetHtml(searchTrackUrl, headers);
+            Song song = GetSongInfo(songInfo);
+            string albumUrl = albumRootUrl + song.KeyId;
+            string albumInfo = GetHtml(albumUrl, headers);
+            song.Album = GetAlbum(albumInfo);
             return song;
+        }
+
+        private string GetAlbum(string html)
+        {
+            dynamic result = JsonConvert.DeserializeObject(html);
+            string album = result.sections[0].metadata[0].text;
+            return album;
         }
 
         private Song GetSongInfo(string html)
@@ -51,8 +59,9 @@ namespace YoutubeConverter
             dynamic result = JsonConvert.DeserializeObject(html);
             string title = result.tracks.hits[0].track.title;
             string artist = result.tracks.hits[0].track.subtitle;
+            string key = result.tracks.hits[0].track.key;
             song.Title = title;
-            song.Album = "";
+            song.KeyId = key;
             song.Artist = artist;
             return song;
         }

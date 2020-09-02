@@ -6,10 +6,9 @@ namespace YoutubeConverter
 {
     internal class Files
     {
-        public string CreateAndMoveToAlbum(string filePath, string song, string album)
+        public string CreateAndMoveToAlbum(string filePath, string targetDir, string song, string album)
         {
-            string currentDir = Directory.GetCurrentDirectory();
-            string newDir = currentDir + "\\" + album;
+            string newDir = targetDir + "\\" + album;
             if (!Directory.Exists(newDir))
             {
                 try

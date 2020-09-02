@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -14,6 +15,13 @@ namespace YoutubeConverter
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
+            SetDefaultDirectory();
+        }
+
+        private void SetDefaultDirectory()
+        {
+            string currentDir = Directory.GetCurrentDirectory();
+            targetDirTextBox.Text = currentDir;
         }
 
         /// <summary>
@@ -79,7 +87,7 @@ namespace YoutubeConverter
                 string filePath = videoDownloader.Download(downloadUrl, songInfo.Title);
 
                 // Move the song to its album folder
-                string songFilePath = file.CreateAndMoveToAlbum(filePath, songInfo.Title, songInfo.Album);
+                string songFilePath = file.CreateAndMoveToAlbum(filePath, targetDirTextBox.Text, songInfo.Title, songInfo.Album);
 
                 // Update the file information
                 Mp3.UpdateSongInformation(filePath, songInfo);
