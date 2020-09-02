@@ -5,12 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YoutubeConverter"
         mc:Ignorable="d"
-        Title="Youtube Converter" Height="125" Width="613.666">
-    <Grid Background="#FF264653">
-        <TextBox x:Name="urlTextBox" HorizontalAlignment="Left" Height="26" Margin="73,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="412" VerticalContentAlignment="Center" Foreground="#FFF4A261" Background="#FF645F53" />
-        <Label Content="URL" HorizontalAlignment="Left" Margin="37,49,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
-        <Button Content="Convert" HorizontalAlignment="Left" Margin="490,49,0,0" VerticalAlignment="Top" Width="96" Height="26" Background="#FF2A9D8F" Foreground="#FF334B2F" Click="OnConvertClick" />
-        <TextBox x:Name="targetDirTextBox" HorizontalAlignment="Left" Height="26" Margin="73,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="513" VerticalContentAlignment="Center" Foreground="#FFF4A261" Background="#FF645F53" />
-        <Label Content="Directory" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
+        Title="Youtube Converter" Height="359.334" Width="625.666">
+    <Grid Background="#FF296673">
+        <TextBox x:Name="urlTextBox" HorizontalAlignment="Left" Height="26" Margin="109,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="275" VerticalContentAlignment="Center" Foreground="White" Background="#FF43A9BF">
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label Content="URL" HorizontalAlignment="Left" Margin="73,101,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="490,101,0,0" VerticalAlignment="Top" Width="96" Height="26" Background="#FFCF3F3F" Foreground="White" Click="OnClearClick">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </Button.Resources>
+        </Button>
+        <TextBox x:Name="targetDirTextBox" HorizontalAlignment="Left" Height="26" Margin="109,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="477" VerticalContentAlignment="Center" Foreground="White" Background="#FF43A9BF">
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label Content="Directory" HorizontalAlignment="Left" Margin="46,56,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
+        <TextBox x:Name="apiKeyTextBox" HorizontalAlignment="Left" Height="26" Margin="109,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="477" VerticalContentAlignment="Center" Foreground="White" Background="#FF43A9BF">
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label Content="Shazam API Key" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
+        <ListBox x:Name="statusListBox" HorizontalAlignment="Left" Height="150" Margin="109,149,0,0" VerticalAlignment="Top" Width="477" Background="#FFBDCFBF">
+            <ListBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </ListBox.Resources>
+        </ListBox>
+        <Label Content="Status" HorizontalAlignment="Left" Margin="62,149,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" RenderTransformOrigin="0.548,-0.5" />
+        <Button Content="Convert" HorizontalAlignment="Left" Margin="389,101,0,0" VerticalAlignment="Top" Width="96" Height="26" Background="#FF60CF3F" Foreground="White" Click="OnConvertClick">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

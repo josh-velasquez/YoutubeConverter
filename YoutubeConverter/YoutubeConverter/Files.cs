@@ -25,5 +25,18 @@ namespace YoutubeConverter
             Directory.Move(filePath, newFilePath);
             return newFilePath;
         }
+
+        public void Cleanup(string filePath)
+        {
+            string parentDir = Directory.GetParent(filePath).FullName;
+            string[] files = Directory.GetFiles(parentDir);
+            foreach (string file in files)
+            {
+                if (Path.GetExtension(file) == ".bak")
+                {
+                    File.Delete(file);
+                }
+            }
+        }
     }
 }
