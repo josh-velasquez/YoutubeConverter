@@ -38,7 +38,7 @@
             </TextBox.Resources>
         </TextBox>
         <Label Content="Shazam API Key" HorizontalAlignment="Left" Margin="31,10,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
-        <ListBox x:Name="statusListBox" HorizontalAlignment="Left" Height="150" Margin="130,196,0,0" VerticalAlignment="Top" Width="517" Background="#FF193F47">
+        <ListBox x:Name="statusListBox" HorizontalAlignment="Left" Height="150" Margin="130,196,0,0" VerticalAlignment="Top" Width="517" Background="#FF193F47" Foreground="White">
             <ListBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4" />

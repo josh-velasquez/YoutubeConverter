@@ -3,6 +3,8 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace YoutubeConverter
 {
@@ -65,11 +67,11 @@ namespace YoutubeConverter
         /// Updates the status box in the UI thread
         /// </summary>
         /// <param name="message"></param>
-        private void UpdateStatusUI(string message)
+        private void UpdateStatusUI(string message, bool failed = false)
         {
             this.Dispatcher.Invoke(() =>
             {
-                statusListBox.Items.Add(message);
+                statusListBox.Items.Add(new ListBoxItem { Content = message, Background = failed ? Brushes.Red : Brushes.LightGreen });
             });
         }
 
@@ -105,7 +107,10 @@ namespace YoutubeConverter
             }
             catch (Exception error)
             {
-                ShowError("Failed to get download url", error.ToString(), true);
+                string status = "Failed to get download url.";
+                UpdateStatusUI(status, true);
+                ShowError(status, error.ToString());
+                return;
             }
             try
             {
@@ -115,17 +120,23 @@ namespace YoutubeConverter
             }
             catch (Exception error)
             {
-                ShowError("Failed to get song information", error.ToString(), true);
+                string status = "Failed to get song information.";
+                UpdateStatusUI(status, true);
+                ShowError(status, error.ToString());
+                return;
             }
             try
             {
                 // Download the mp3 file form the
-                UpdateStatusUI("Downloading song...");
+                UpdateStatusUI("Downloading song " + songInfo.Title + "...");
                 filePath = videoDownloader.Download(downloadUrl, songInfo.Title);
             }
             catch (Exception error)
             {
-                ShowError("Failed to download song", error.ToString(), true);
+                string status = "Failed to download song";
+                UpdateStatusUI(status, true);
+                ShowError(status, error.ToString());
+                return;
             }
             try
             {
@@ -134,7 +145,10 @@ namespace YoutubeConverter
             }
             catch (Exception error)
             {
-                ShowError("Failed to move song", error.ToString(), true);
+                string status = "Failed to move song";
+                UpdateStatusUI(status, true);
+                ShowError(status, error.ToString());
+                return;
             }
             try
             {
@@ -144,7 +158,9 @@ namespace YoutubeConverter
             }
             catch (Exception error)
             {
-                ShowError("Failed to update song properties", error.ToString());
+                string status = "Failed to update song properties";
+                UpdateStatusUI(status, true);
+                ShowError(status, error.ToString());
             }
             try
             {
@@ -155,7 +171,9 @@ namespace YoutubeConverter
             }
             catch (Exception error)
             {
-                ShowError("Failed to remove backup file", error.ToString());
+                string status = "Failed to remove backup file";
+                UpdateStatusUI(status, true);
+                ShowError(status, error.ToString());
             }
         }
 
@@ -165,13 +183,9 @@ namespace YoutubeConverter
         /// <param name="message">Message to show the user</param>
         /// <param name="error">Error that caused the message to show</param>
         /// <param name="critical">true if the program should stop and not continue; false otherwise</param>
-        private void ShowError(string message, string error, bool critical = false)
+        private void ShowError(string message, string error)
         {
             MessageBox.Show(message + ": " + error);
-            if (critical)
-            {
-                return;
-            }
         }
 
         private void OnConvertClick(object sender, RoutedEventArgs e)
@@ -180,6 +194,7 @@ namespace YoutubeConverter
             string targetDir = targetDirTextBox.Text;
             string url = urlTextBox.Text;
             string keywords = keywordsTextBox.Text;
+            keywords = keywords.Replace("+", " ");
             new Thread(() => Start(apiKey, targetDir, url, keywords)).Start();
         }
 
