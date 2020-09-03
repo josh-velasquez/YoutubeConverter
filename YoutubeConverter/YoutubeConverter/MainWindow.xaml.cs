@@ -72,6 +72,9 @@ namespace YoutubeConverter
             API api = new API();
             Downloader videoDownloader = new Downloader();
             Files file = new Files();
+            string songTitle = "", downloadUrl = "", filePath = "", songFilePath = "";
+            Song songInfo = new Song();
+
             try
             {
                 //Extract youtube ID from url
@@ -80,28 +83,57 @@ namespace YoutubeConverter
                 // Get the html page of the resulting api call to youtube 320
                 UpdateStatusUI("Sending request to YouTube320 Api...");
                 string html = api.GetHtml(youtube320 + id);
-
                 // Grab title of the song
-                string songTitle = ExtractTitle(html);
+                songTitle = ExtractTitle(html);
 
                 // Get the download url from the html page
-                string downloadUrl = ExtractUrl(html);
-
+                downloadUrl = ExtractUrl(html);
+            }
+            catch (Exception error)
+            {
+                ShowError("Failed to get download url", error.ToString(), true);
+            }
+            try
+            {
                 // Hit an api to get the song information
                 UpdateStatusUI("Getting song info...");
-                Song songInfo = api.GetSongInfo(songTitle, apikey);
-
+                songInfo = api.GetSongInfo(keywords != String.Empty ? keywords : songTitle, apikey);
+            }
+            catch (Exception error)
+            {
+                ShowError("Failed to get song information", error.ToString(), true);
+            }
+            try
+            {
                 // Download the mp3 file form the
                 UpdateStatusUI("Downloading song...");
-                string filePath = videoDownloader.Download(downloadUrl, songInfo.Title);
-
+                filePath = videoDownloader.Download(downloadUrl, songInfo.Title);
+            }
+            catch (Exception error)
+            {
+                ShowError("Failed to download song", error.ToString(), true);
+            }
+            try
+            {
                 // Move the song to its album folder
-                string songFilePath = file.CreateAndMoveToAlbum(filePath, targetDir, songInfo.Title, songInfo.Album);
-
+                songFilePath = file.CreateAndMoveToAlbum(filePath, targetDir, songInfo.Title, songInfo.Album);
+            }
+            catch (Exception error)
+            {
+                ShowError("Failed to move song", error.ToString(), true);
+            }
+            try
+            {
                 // Update the file information
                 UpdateStatusUI("Updating file properties...");
                 Mp3.UpdateSongInformation(songFilePath, songInfo);
-
+            }
+            catch (Exception error)
+            {
+                ShowError("Failed to update song properties", error.ToString());
+            }
+            try
+            {
                 // Remove backup files (.bak)
                 UpdateStatusUI("Cleaning up files...");
                 file.Cleanup(songFilePath);
@@ -109,7 +141,16 @@ namespace YoutubeConverter
             }
             catch (Exception error)
             {
-                MessageBox.Show("Failed to convert song: " + error);
+                ShowError("Failed to remove backup file", error.ToString());
+            }
+        }
+
+        private void ShowError(string message, string error, bool critical = false)
+        {
+            MessageBox.Show(message + ": " + error);
+            if (critical)
+            {
+                return;
             }
         }
 
@@ -126,6 +167,7 @@ namespace YoutubeConverter
         {
             urlTextBox.Text = "";
             statusListBox.Items.Clear();
+            keywordsTextBox.Text = "";
         }
     }
 }

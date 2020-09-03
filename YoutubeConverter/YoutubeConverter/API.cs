@@ -68,7 +68,7 @@ namespace YoutubeConverter
 
         private string ExtractTerms(string title)
         {
-            string[] invalidTerms = { "Lyrics", "lyrics", "(Lyrics)", "(lyrics)" };
+            string[] invalidTerms = { "Lyrics", "lyrics", "(Lyrics)", "(lyrics)", "+", "-" };
             string[] terms = title.Split(' ');
             string searchTerms = "";
             foreach (string term in terms)

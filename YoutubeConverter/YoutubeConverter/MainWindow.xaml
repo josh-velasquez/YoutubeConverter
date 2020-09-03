@@ -53,7 +53,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <TextBox x:Name="keywordsTextBox" HorizontalAlignment="Left" Height="26" Margin="130,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491" VerticalContentAlignment="Center" Foreground="White" Background="#FF193F47" Text="ex. song_name+artist">
+        <TextBox x:Name="keywordsTextBox" HorizontalAlignment="Left" Height="26" Margin="130,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491" VerticalContentAlignment="Center" Foreground="White" Background="#FF193F47">
             <TextBox.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="4" />
@@ -61,6 +61,6 @@
             </TextBox.Resources>
         </TextBox>
         <Label Content="Keywords (optional)" HorizontalAlignment="Left" Margin="10,149,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
-        <Image HorizontalAlignment="Left" Height="17" Margin="626,154,0,0" VerticalAlignment="Top" Width="21" Source="help.png" RenderTransformOrigin="1.083,0.676" ToolTip="Allows for better song info search. Separate each keyword with the '+' symbol" />
+        <Image HorizontalAlignment="Left" Height="17" Margin="626,154,0,0" VerticalAlignment="Top" Width="21" Source="help.png" RenderTransformOrigin="1.083,0.676" ToolTip="Allows for better song info search. Separate each keyword with the '+' symbol. Ex. song_name+artist0+artist1" />
     </Grid>
 </Window>
