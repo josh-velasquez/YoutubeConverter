@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 
 namespace YoutubeConverter
@@ -57,9 +58,16 @@ namespace YoutubeConverter
             return regex.Matches(html)[0].Groups[1].Value;
         }
 
-        private void OnConvertClick(object sender, RoutedEventArgs e)
+        private void UpdateStatusUI(string message)
         {
-            statusListBox.Items.Clear();
+            this.Dispatcher.Invoke(() =>
+            {
+                statusListBox.Items.Add(message);
+            });
+        }
+
+        private void Start(string apikey, string targetDir, string url, string keywords)
+        {
             string youtube320 = "https://www.320youtube.com/watch?v=";
             API api = new API();
             Downloader videoDownloader = new Downloader();
@@ -67,11 +75,10 @@ namespace YoutubeConverter
             try
             {
                 //Extract youtube ID from url
-                statusListBox.Items.Add("Getting YouTube ID from url...");
-                string id = GetYoutubeId(urlTextBox.Text);
+                string id = GetYoutubeId(url);
 
                 // Get the html page of the resulting api call to youtube 320
-                statusListBox.Items.Add("Sending request to YouTube320 Api...");
+                UpdateStatusUI("Sending request to YouTube320 Api...");
                 string html = api.GetHtml(youtube320 + id);
 
                 // Grab title of the song
@@ -81,29 +88,38 @@ namespace YoutubeConverter
                 string downloadUrl = ExtractUrl(html);
 
                 // Hit an api to get the song information
-                statusListBox.Items.Add("Getting song info...");
-                Song songInfo = api.GetSongInfo(songTitle, apiKeyTextBox.Text);
+                UpdateStatusUI("Getting song info...");
+                Song songInfo = api.GetSongInfo(songTitle, apikey);
 
                 // Download the mp3 file form the
-                statusListBox.Items.Add("Downloading song...");
+                UpdateStatusUI("Downloading song...");
                 string filePath = videoDownloader.Download(downloadUrl, songInfo.Title);
 
                 // Move the song to its album folder
-                string songFilePath = file.CreateAndMoveToAlbum(filePath, targetDirTextBox.Text, songInfo.Title, songInfo.Album);
+                string songFilePath = file.CreateAndMoveToAlbum(filePath, targetDir, songInfo.Title, songInfo.Album);
 
                 // Update the file information
-                statusListBox.Items.Add("Updating file properties...");
+                UpdateStatusUI("Updating file properties...");
                 Mp3.UpdateSongInformation(songFilePath, songInfo);
 
                 // Remove backup files (.bak)
-                statusListBox.Items.Add("Cleaning up files...");
+                UpdateStatusUI("Cleaning up files...");
                 file.Cleanup(songFilePath);
-                statusListBox.Items.Add("Finished. File location: " + songFilePath);
+                UpdateStatusUI("Finished. File location: " + songFilePath);
             }
             catch (Exception error)
             {
                 MessageBox.Show("Failed to convert song: " + error);
             }
+        }
+
+        private void OnConvertClick(object sender, RoutedEventArgs e)
+        {
+            string apiKey = apiKeyTextBox.Text;
+            string targetDir = targetDirTextBox.Text;
+            string url = urlTextBox.Text;
+            string keywords = keywordsTextBox.Text;
+            new Thread(() => Start(apiKey, targetDir, url, keywords)).Start();
         }
 
         private void OnClearClick(object sender, RoutedEventArgs e)
