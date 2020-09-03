@@ -18,6 +18,9 @@ namespace YoutubeConverter
             SetDefaultDirectory();
         }
 
+        /// <summary>
+        /// Gets the current directory and shows it to the user
+        /// </summary>
         private void SetDefaultDirectory()
         {
             string currentDir = Directory.GetCurrentDirectory();
@@ -58,6 +61,10 @@ namespace YoutubeConverter
             return regex.Matches(html)[0].Groups[1].Value;
         }
 
+        /// <summary>
+        /// Updates the status box in the UI thread
+        /// </summary>
+        /// <param name="message"></param>
         private void UpdateStatusUI(string message)
         {
             this.Dispatcher.Invoke(() =>
@@ -66,6 +73,13 @@ namespace YoutubeConverter
             });
         }
 
+        /// <summary>
+        /// Main start of the program
+        /// </summary>
+        /// <param name="apikey">Key provided by the user (Shazam api key)</param>
+        /// <param name="targetDir">Target directory that the song will be downloaded to</param>
+        /// <param name="url">YouTube url of the song</param>
+        /// <param name="keywords">Keywords that the user can enter for better searching</param>
         private void Start(string apikey, string targetDir, string url, string keywords)
         {
             string youtube320 = "https://www.320youtube.com/watch?v=";
@@ -145,6 +159,12 @@ namespace YoutubeConverter
             }
         }
 
+        /// <summary>
+        /// Displays a pop up error message
+        /// </summary>
+        /// <param name="message">Message to show the user</param>
+        /// <param name="error">Error that caused the message to show</param>
+        /// <param name="critical">true if the program should stop and not continue; false otherwise</param>
         private void ShowError(string message, string error, bool critical = false)
         {
             MessageBox.Show(message + ": " + error);

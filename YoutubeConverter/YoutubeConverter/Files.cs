@@ -6,6 +6,14 @@ namespace YoutubeConverter
 {
     internal class Files
     {
+        /// <summary>
+        /// Creates a new folder based on the album name and moves the song to there
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="targetDir"></param>
+        /// <param name="song"></param>
+        /// <param name="album"></param>
+        /// <returns></returns>
         public string CreateAndMoveToAlbum(string filePath, string targetDir, string song, string album)
         {
             string newDir = targetDir + "\\" + album;
@@ -26,6 +34,10 @@ namespace YoutubeConverter
             return newFilePath;
         }
 
+        /// <summary>
+        /// Removes any .bak files that are created when moving the song file
+        /// </summary>
+        /// <param name="filePath">File path to remove the .bak files from</param>
         public void Cleanup(string filePath)
         {
             string parentDir = Directory.GetParent(filePath).FullName;

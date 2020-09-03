@@ -8,6 +8,12 @@ namespace YoutubeConverter
 {
     internal class API
     {
+        /// <summary>
+        /// Gets the html result from the request
+        /// </summary>
+        /// <param name="url">Target url to hit</param>
+        /// <param name="headers">Optional headers that can be included</param>
+        /// <returns></returns>
         public string GetHtml(string url, List<KeyValuePair<string, string>> headers = null)
         {
             string html = string.Empty;
@@ -29,6 +35,12 @@ namespace YoutubeConverter
             return html;
         }
 
+        /// <summary>
+        /// Gets the song info from the Shazam api
+        /// </summary>
+        /// <param name="title">Title of the song</param>
+        /// <param name="apiKey">API key from Shazam</param>
+        /// <returns></returns>
         public Song GetSongInfo(string title, string apiKey)
         {
             string searchTrackRootUrl = "https://shazam.p.rapidapi.com/search?locale=en-US&offset=0&limit=5&term=";
@@ -46,6 +58,11 @@ namespace YoutubeConverter
             return song;
         }
 
+        /// <summary>
+        /// Gets the album name from a json string
+        /// </summary>
+        /// <param name="html">json that contains the album name</param>
+        /// <returns></returns>
         private string GetAlbum(string html)
         {
             dynamic result = JsonConvert.DeserializeObject(html);
@@ -53,6 +70,11 @@ namespace YoutubeConverter
             return album;
         }
 
+        /// <summary>
+        /// Gets the song information
+        /// </summary>
+        /// <param name="html">json that contains the search information</param>
+        /// <returns></returns>
         private Song GetSongInfo(string html)
         {
             Song song = new Song();
@@ -66,6 +88,11 @@ namespace YoutubeConverter
             return song;
         }
 
+        /// <summary>
+        /// Extracts key words that is used for the Shazam api
+        /// </summary>
+        /// <param name="title">Title of the song</param>
+        /// <returns></returns>
         private string ExtractTerms(string title)
         {
             string[] invalidTerms = { "Lyrics", "lyrics", "(Lyrics)", "(lyrics)", "+", "-" };
