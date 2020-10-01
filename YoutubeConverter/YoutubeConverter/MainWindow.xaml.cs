@@ -81,8 +81,7 @@ namespace YoutubeConverter
         /// <param name="apikey">Key provided by the user (Shazam api key)</param>
         /// <param name="targetDir">Target directory that the song will be downloaded to</param>
         /// <param name="url">YouTube url of the song</param>
-        /// <param name="keywords">Keywords that the user can enter for better searching</param>
-        private void Start(string apikey, string targetDir, string url, string keywords)
+        private void Start(string apikey, string targetDir, string url)
         {
             string youtube320 = "https://www.320youtube.com/watch?v=";
             API api = new API();
@@ -116,7 +115,7 @@ namespace YoutubeConverter
             {
                 // Hit an api to get the song information
                 UpdateStatusUI("Getting song info...");
-                songInfo = api.GetSongInfo(keywords != String.Empty ? keywords : songTitle, apikey);
+                songInfo = api.GetSongInfo(songTitle, apikey);
             }
             catch (Exception error)
             {
@@ -125,9 +124,17 @@ namespace YoutubeConverter
                 ShowError(status, error.ToString());
                 return;
             }
+
+            UpdateSongInfo(songInfo);
+            // Wait for confirmation here
+
+
+
+
+
+
             try
             {
-                // Download the mp3 file form the
                 UpdateStatusUI("Downloading song " + songInfo.Title + "...");
                 filePath = videoDownloader.Download(downloadUrl, songInfo.Title);
             }
@@ -188,21 +195,28 @@ namespace YoutubeConverter
             MessageBox.Show(message + ": " + error);
         }
 
+        private void UpdateSongInfo(Song song)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                SongTitleTextBox.Text = song.Title;
+                ArtistTextBox.Text = song.Artist;
+                AlbumTextBox.Text = song.Album;
+            });
+        }
+
         private void OnConvertClick(object sender, RoutedEventArgs e)
         {
             string apiKey = apiKeyTextBox.Text;
             string targetDir = targetDirTextBox.Text;
             string url = urlTextBox.Text;
-            string keywords = keywordsTextBox.Text;
-            keywords = keywords.Replace("+", " ");
-            new Thread(() => Start(apiKey, targetDir, url, keywords)).Start();
+            new Thread(() => Start(apiKey, targetDir, url)).Start();
         }
 
         private void OnClearClick(object sender, RoutedEventArgs e)
         {
             urlTextBox.Text = "";
             statusListBox.Items.Clear();
-            keywordsTextBox.Text = "";
         }
     }
 }
