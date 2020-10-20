@@ -21,3 +21,5 @@ C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\YoutubeConverter.csproj.CopyComplete
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\YoutubeConverter.exe
 C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\YoutubeConverter.pdb
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\Help.g.cs
+C:\Users\joshv\Desktop\Github\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\Help.baml

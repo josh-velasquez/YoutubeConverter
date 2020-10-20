@@ -23,10 +23,9 @@ namespace YoutubeConverter
             InitializeComponent();
             SetDefaultDirectory();
 
-            // DEBUG
-            apiKeyTextBox.Text = "320d5e38afmsh4303ea9c1b8f26dp1ba115jsnee49a5333256";
-            targetDirTextBox.Text = "C:\\Users\\joshv\\Desktop\\Music";
-            urlTextBox.Text = "https://www.youtube.com/watch?v=jf0vrsP1i5g&ab_channel=TheGoodVibe";
+            //apiKeyTextBox.Text = "";
+            //targetDirTextBox.Text = "";
+            //urlTextBox.Text = "";
         }
 
         /// <summary>
