@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YoutubeConverter"
         mc:Ignorable="d"
-        Title="Youtube Converter" Height="374.834" Width="697.666">
+        Title="Youtube Converter" Height="374.834" Width="726.333">
     <Grid Background="#FF296673">
-        <TextBox x:Name="urlTextBox" HorizontalAlignment="Left" Height="26" Margin="130,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="315" VerticalContentAlignment="Center" Foreground="White" Background="#FF193F47">
+        <TextBox x:Name="urlTextBox" HorizontalAlignment="Left" Height="26" Margin="130,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="517" VerticalContentAlignment="Center" Foreground="White" Background="#FF193F47">
             <TextBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4" />
@@ -15,7 +15,7 @@
             </TextBox.Resources>
         </TextBox>
         <Label Content="URL" HorizontalAlignment="Left" Margin="94,101,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="551,101,0,0" VerticalAlignment="Top" Width="96" Height="26" Background="#FFCF3F3F" Foreground="White" Click="OnClearClick">
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="522,145,0,0" VerticalAlignment="Top" Width="60" Height="26" Background="#FFCF3F3F" Foreground="White" Click="OnClearClick" RenderTransformOrigin="-0.617,0.692">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4" />
@@ -38,7 +38,7 @@
             </TextBox.Resources>
         </TextBox>
         <Label Content="Shazam API Key" HorizontalAlignment="Left" Margin="31,10,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
-        <ListBox x:Name="statusListBox" HorizontalAlignment="Left" Height="128" Margin="356,176,0,0" VerticalAlignment="Top" Width="291" Background="#FF193F47" Foreground="White">
+        <ListBox x:Name="statusListBox" HorizontalAlignment="Left" Height="128" Margin="356,176,0,0" VerticalAlignment="Top" Width="291" Background="#FF193F47" Foreground="Black">
             <ListBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4" />
@@ -46,39 +46,46 @@
             </ListBox.Resources>
         </ListBox>
         <Label Content="Status" HorizontalAlignment="Left" Margin="356,145,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" RenderTransformOrigin="0.548,-0.5" />
-        <Button Content="Find" HorizontalAlignment="Left" Margin="450,101,0,0" VerticalAlignment="Top" Width="96" Height="26" Background="#FF60CF3F" Foreground="White" Click="OnConvertClick">
+        <Button Content="Import" HorizontalAlignment="Left" Margin="587,145,0,0" VerticalAlignment="Top" Width="60" Height="26" Background="#FFC2CB0C" Foreground="White" Click="OnImportClick" ToolTip="Import a text file containing all the urls of the song to download. All the songs will be automatically downloaded">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="4" />
                 </Style>
             </Button.Resources>
         </Button>
-        <Image HorizontalAlignment="Left" Height="17" Margin="100,282,0,0" VerticalAlignment="Top" Width="21" Source="help.png" RenderTransformOrigin="1.083,0.676" ToolTip="Ensure that the song information above is correct. If not please update the information accordingly and press download to continue." />
+        <Image HorizontalAlignment="Left" Height="17" Margin="659,15,0,0" VerticalAlignment="Top" Width="21" Source="help.png" RenderTransformOrigin="1.083,0.676" ToolTip="Ensure that the song information above is correct. If not please update the information accordingly and press download to continue." MouseLeftButtonDown="OnHelpClick" />
         <Label Content="Song Title" HorizontalAlignment="Left" Margin="62,145,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" RenderTransformOrigin="0.476,-1.423" />
         <Label Content="Artist" HorizontalAlignment="Left" Margin="87,190,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" />
         <Label Content="Album" HorizontalAlignment="Left" Margin="80,236,0,0" VerticalAlignment="Top" Foreground="#FFE9C46A" RenderTransformOrigin="-0.422,0" />
-        <TextBox x:Name="SongTitleTextBox" HorizontalAlignment="Left" Height="26" Margin="130,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" VerticalContentAlignment="Center" Foreground="White" Background="#FF193F47">
+        <TextBox x:Name="SongTitleTextBox" HorizontalAlignment="Left" Height="26" Margin="130,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" VerticalContentAlignment="Center" Foreground="White" Background="#FF193F47" IsEnabled="False">
             <TextBox.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="4" />
                 </Style>
             </TextBox.Resources>
         </TextBox>
-        <TextBox x:Name="ArtistTextBox" HorizontalAlignment="Left" Height="26" Margin="130,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" VerticalContentAlignment="Center" Foreground="White" Background="#FF193F47">
+        <TextBox x:Name="ArtistTextBox" HorizontalAlignment="Left" Height="26" Margin="130,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" VerticalContentAlignment="Center" Foreground="White" Background="#FF193F47" IsEnabled="False">
             <TextBox.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="4" />
                 </Style>
             </TextBox.Resources>
         </TextBox>
-        <TextBox x:Name="AlbumTextBox" HorizontalAlignment="Left" Height="26" Margin="130,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" VerticalContentAlignment="Center" Foreground="White" Background="#FF193F47">
+        <TextBox x:Name="AlbumTextBox" HorizontalAlignment="Left" Height="26" Margin="130,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" VerticalContentAlignment="Center" Foreground="White" Background="#FF193F47" IsEnabled="False">
             <TextBox.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="4" />
                 </Style>
             </TextBox.Resources>
         </TextBox>
-        <Button Content="Download" HorizontalAlignment="Left" Margin="130,278,0,0" VerticalAlignment="Top" Width="212" Height="26" Background="#FF60CF3F" Foreground="White" Click="OnConvertClick">
+        <Button x:Name="DownloadButton" Content="Download" HorizontalAlignment="Left" Margin="130,278,0,0" VerticalAlignment="Top" Width="212" Height="26" Background="#FF60CF3F" Foreground="White" Click="OnDownloadClick" IsEnabled="False">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Content="Find" HorizontalAlignment="Left" Margin="457,145,0,0" VerticalAlignment="Top" Width="60" Height="26" Background="#FF60CF3F" Foreground="White" Click="OnConvertClick">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="4" />
