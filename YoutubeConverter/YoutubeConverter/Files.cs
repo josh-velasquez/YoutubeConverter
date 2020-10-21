@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace YoutubeConverter
 {
@@ -49,6 +50,16 @@ namespace YoutubeConverter
                     File.Delete(file);
                 }
             }
+        }
+
+        /// <summary>
+        /// Extracts all the urls from the file name
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public string[] ExtractUrls(string file)
+        {
+            return File.ReadLines(file).ToArray();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -22,10 +23,6 @@ namespace YoutubeConverter
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             SetDefaultDirectory();
-
-            //apiKeyTextBox.Text = "";
-            //targetDirTextBox.Text = "";
-            //urlTextBox.Text = "";
         }
 
         /// <summary>
@@ -85,17 +82,16 @@ namespace YoutubeConverter
         }
 
         /// <summary>
-        /// Main start of the program
+        /// Retrieves all the song information
         /// </summary>
-        /// <param name="apikey">Key provided by the user (Shazam api key)</param>
-        /// <param name="targetDir">Target directory that the song will be downloaded to</param>
-        /// <param name="url">YouTube url of the song</param>
-        private void Start(string apikey, string url)
+        /// <param name="apikey"></param>
+        /// <param name="url"></param>
+        private void GetSongInformation(string apikey, string url)
         {
             string youtube320 = "https://www.320youtube.com/watch?v=";
             API api = new API();
-            string songTitle = "";
             songInfo = new Song();
+            string songTitle;
             try
             {
                 //Extract youtube ID from url
@@ -130,7 +126,16 @@ namespace YoutubeConverter
                 ShowError(status, error.Message.ToString());
                 return;
             }
+        }
 
+        /// <summary>
+        /// Main start of the program
+        /// </summary>
+        /// <param name="apikey">Key provided by the user (Shazam api key)</param>
+        /// <param name="url">YouTube url of the song</param>
+        private void Start(string apikey, string url)
+        {
+            GetSongInformation(apikey, url);
             UpdateSongInfo();
             UpdateStatusUI("Verify song information and press Download to continue.");
             EnableFields(true);
@@ -142,11 +147,15 @@ namespace YoutubeConverter
         private void DownloadSong()
         {
             EnableFields(false);
-
             Files file = new Files();
             Downloader videoDownloader = new Downloader();
             string songFilePath;
             string filePath;
+            if (targetDir == null)
+            {
+                UpdateStatusUI("target dir error", true);
+                return;
+            }
             if (songInfo == null || targetDir == null || downloadUrl == null)
             {
                 UpdateStatusUI("Song info error", true);
@@ -204,7 +213,6 @@ namespace YoutubeConverter
 
             songInfo = null;
             downloadUrl = null;
-            targetDir = null;
         }
 
         /// <summary>
@@ -291,6 +299,51 @@ namespace YoutubeConverter
         /// <param name="e"></param>
         private void OnImportClick(object sender, RoutedEventArgs e)
         {
+            if (apiKeyTextBox.Text == "" || targetDirTextBox.Text == "" || urlTextBox.Text == "")
+            {
+                ShowError("Field Value Missing", "Enter a value into the appropriate field");
+                return;
+            }
+            ReadFile();
+        }
+
+        /// <summary>
+        /// Reads the file input of urls and automatically downloads them all
+        /// </summary>
+        private void ReadFile()
+        {
+            try
+            {
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.DefaultExt = "txt";
+                ofd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                string fileName = "";
+                if (ofd.ShowDialog() == null)
+                {
+                    ShowError("Failed to open text file", "Enter a valid text file.");
+                    return;
+                }
+                UpdateStatusUI("Reading file urls...");
+                fileName = ofd.FileName;
+                Files files = new Files();
+                string apiKey = apiKeyTextBox.Text;
+                string dir = targetDirTextBox.Text;
+                new Thread(() =>
+                {
+                    foreach (string url in files.ExtractUrls(ofd.FileName))
+                    {
+                        targetDir = dir;
+                        GetSongInformation(apiKey, url);
+                        DownloadSong();
+                    }
+                }).Start();
+            }
+            catch (Exception error)
+            {
+                string status = "Failed to read file urls";
+                UpdateStatusUI(status, true);
+                ShowError(status, error.Message.ToString());
+            }
         }
 
         /// <summary>
