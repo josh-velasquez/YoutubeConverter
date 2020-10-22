@@ -23,6 +23,12 @@ namespace YoutubeConverter
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             SetDefaultDirectory();
+
+#if DEBUG
+            apiKeyTextBox.Text = "";
+            targetDirTextBox.Text = "C:\\Users\\joshv\\Desktop\\Music";
+            urlTextBox.Text = "https://www.youtube.com/watch?v=iqp7oiesrwI&ab_channel=LYRIX";
+#endif
         }
 
         /// <summary>
@@ -86,7 +92,7 @@ namespace YoutubeConverter
         /// </summary>
         /// <param name="apikey"></param>
         /// <param name="url"></param>
-        private void GetSongInformation(string apikey, string url)
+        private bool GetSongInformation(string apikey, string url)
         {
             string youtube320 = "https://www.320youtube.com/watch?v=";
             API api = new API();
@@ -111,7 +117,7 @@ namespace YoutubeConverter
                 string status = "Failed to get download url.";
                 UpdateStatusUI(status, true);
                 ShowError(status, error.Message.ToString());
-                return;
+                return false;
             }
             try
             {
@@ -124,8 +130,9 @@ namespace YoutubeConverter
                 string status = "Failed to get song information.";
                 UpdateStatusUI(status, true);
                 ShowError(status, error.Message.ToString());
-                return;
+                return false;
             }
+            return true;
         }
 
         /// <summary>
@@ -136,7 +143,10 @@ namespace YoutubeConverter
         private void Start(string apikey, string url)
         {
             EnableFields(false);
-            GetSongInformation(apikey, url);
+            if (!GetSongInformation(apikey, url))
+            {
+                return;
+            }
             UpdateSongInfo();
             UpdateStatusUI("Verify song information and press Download to continue.");
             EnableFields(true);
@@ -281,6 +291,9 @@ namespace YoutubeConverter
             SongTitleTextBox.Text = "";
             ArtistTextBox.Text = "";
             AlbumTextBox.Text = "";
+            songInfo = null;
+            downloadUrl = null;
+            EnableFields(false);
         }
 
         /// <summary>
@@ -336,8 +349,14 @@ namespace YoutubeConverter
                     foreach (string url in files.ExtractUrls(ofd.FileName))
                     {
                         targetDir = dir;
-                        GetSongInformation(apiKey, url);
-                        DownloadSong();
+                        if (!GetSongInformation(apiKey, url))
+                        {
+                            UpdateStatusUI("Failed to get song information for: " + url);
+                        }
+                        else
+                        {
+                            DownloadSong();
+                        }
                     }
                 }).Start();
                 EnableFields(true);
@@ -358,8 +377,10 @@ namespace YoutubeConverter
         /// <param name="e"></param>
         private void OnHelpClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Help help = new Help();
-            help.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            Help help = new Help
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
             help.Show();
         }
     }
