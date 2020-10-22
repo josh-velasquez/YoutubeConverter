@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YoutubeConverter"
         mc:Ignorable="d"
-        Title="Help" Height="584.187" Width="514.006">
+        Title="Help" Height="506.187" Width="514.006">
     <Grid Background="#FF296673">
-        <RichTextBox HorizontalAlignment="Left" Height="437" Margin="27,85,0,0" VerticalAlignment="Top" IsReadOnly="True" Width="450" Background="#FF193F47" IsDocumentEnabled="True" VerticalScrollBarVisibility="Auto" Foreground="White">
+        <RichTextBox HorizontalAlignment="Left" Height="349" Margin="27,85,0,0" VerticalAlignment="Top" IsReadOnly="True" Width="450" Background="#FF193F47" IsDocumentEnabled="True" VerticalScrollBarVisibility="Auto" Foreground="White">
             <FlowDocument>
                 <Paragraph>
                     <Run Text="Paste your Shazam API Key to the field. This program will query the Shazam API to retrieve song information based on your url(s)" />
