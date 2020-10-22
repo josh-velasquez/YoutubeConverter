@@ -13,16 +13,16 @@
                     <Run Text="Paste your Shazam API Key to the field. This program will query the Shazam API to retrieve song information based on your url(s)"/>
                 </Paragraph>
                 <Paragraph>
-                    <Run Text="Enter the Youtube url of the song you want to download and convert to an MP3 file. For multiple urls, press the import button to import the text that contains all the urls you want to download. Each url should be separated on a new line."/>
+                    <Run Text="Enter the Youtube url of the song you want to download and convert to an MP3 file. Once you have entered your url, press the find button to retrieve the song information. Verify that the song information is correct so that the right information is edited into the MP3 file of the song."/>
                 </Paragraph>
                 <Paragraph>
-                    <Run Text="Once you have selected your url(s), press the find button to retrieve the song information. Verify that the song information is correct so that the right information is edited into the MP3 file of the song."/>
+                    <Run Text="Once verified, press the download button to download the song and save it with the song information shown."/>
                 </Paragraph>
                 <Paragraph>
-                    <Run Text="Once verified, press the download button to download the song and save it with the song information shown. Do note that when you use the import functionality, the verification for each song is omitted and all songs are automatically downloaded right away."/>
+                    <Run Text="For multiple urls, press the import button to import the text that contains all the urls you want to download. Each url should be separated on a new line. Do note that when you use the import functionality, the verification for each song is omitted and all songs are automatically downloaded right away (no verification of information needed)."/>
                 </Paragraph>
                 <Paragraph>
-                    <Run Text="When done, you can press the Clear button to clear the fields and download some more songs."/>
+                    <Run Text="When done, you can press the Clear button to clear the fields."/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

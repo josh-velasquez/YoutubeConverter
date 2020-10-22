@@ -135,6 +135,7 @@ namespace YoutubeConverter
         /// <param name="url">YouTube url of the song</param>
         private void Start(string apikey, string url)
         {
+            EnableFields(false);
             GetSongInformation(apikey, url);
             UpdateSongInfo();
             UpdateStatusUI("Verify song information and press Download to continue.");
@@ -299,11 +300,12 @@ namespace YoutubeConverter
         /// <param name="e"></param>
         private void OnImportClick(object sender, RoutedEventArgs e)
         {
-            if (apiKeyTextBox.Text == "" || targetDirTextBox.Text == "" || urlTextBox.Text == "")
+            if (apiKeyTextBox.Text == "" || targetDirTextBox.Text == "")
             {
                 ShowError("Field Value Missing", "Enter a value into the appropriate field");
                 return;
             }
+            EnableFields(false);
             ReadFile();
         }
 
@@ -314,13 +316,14 @@ namespace YoutubeConverter
         {
             try
             {
-                OpenFileDialog ofd = new OpenFileDialog();
-                ofd.DefaultExt = "txt";
-                ofd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                string fileName = "";
-                if (ofd.ShowDialog() == null)
+                OpenFileDialog ofd = new OpenFileDialog
                 {
-                    ShowError("Failed to open text file", "Enter a valid text file.");
+                    DefaultExt = "txt",
+                    Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"
+                };
+                string fileName = "";
+                if (ofd.ShowDialog() != true)
+                {
                     return;
                 }
                 UpdateStatusUI("Reading file urls...");
@@ -337,6 +340,8 @@ namespace YoutubeConverter
                         DownloadSong();
                     }
                 }).Start();
+                EnableFields(true);
+                UpdateStatusUI("Finished downloading imported urls.");
             }
             catch (Exception error)
             {
