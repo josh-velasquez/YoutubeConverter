@@ -6,7 +6,7 @@ using System.Net;
 
 namespace YoutubeConverter
 {
-    internal class API
+    internal static class API
     {
         /// <summary>
         /// Gets the html result from the request
@@ -14,7 +14,7 @@ namespace YoutubeConverter
         /// <param name="url">Target url to hit</param>
         /// <param name="headers">Optional headers that can be included</param>
         /// <returns></returns>
-        public string GetHtml(string url, List<KeyValuePair<string, string>> headers = null)
+        public static string GetHtml(string url, List<KeyValuePair<string, string>> headers = null)
         {
             string html = string.Empty;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -41,7 +41,7 @@ namespace YoutubeConverter
         /// <param name="title">Title of the song</param>
         /// <param name="apiKey">API key from Shazam</param>
         /// <returns></returns>
-        public Song GetSongInfo(string title, string apiKey)
+        public static Song GetSongInfo(string title, string apiKey)
         {
             string searchTrackRootUrl = "https://shazam.p.rapidapi.com/search?locale=en-US&offset=0&limit=5&term=";
             string albumRootUrl = "https://shazam.p.rapidapi.com/songs/get-details?locale=en-US&key=";
@@ -63,7 +63,7 @@ namespace YoutubeConverter
         /// </summary>
         /// <param name="html">json that contains the album name</param>
         /// <returns></returns>
-        private string GetAlbum(string html)
+        private static string GetAlbum(string html)
         {
             dynamic result = JsonConvert.DeserializeObject(html);
             string album = result.sections[0].metadata[0].text;
@@ -75,7 +75,7 @@ namespace YoutubeConverter
         /// </summary>
         /// <param name="html">json that contains the search information</param>
         /// <returns></returns>
-        private Song GetSongInfo(string html)
+        private static Song GetSongInfo(string html)
         {
             Song song = new Song();
             dynamic result = JsonConvert.DeserializeObject(html);
@@ -93,10 +93,10 @@ namespace YoutubeConverter
         /// </summary>
         /// <param name="title">Title of the song</param>
         /// <returns></returns>
-        private string ExtractTerms(string title)
+        private static string ExtractTerms(string title)
         {
-            string[] invalidTerms = { "Lyrics", "lyrics", "(Lyrics)", "(lyrics)", "+", "-" };
-            string[] terms = title.Split(' ');
+            string[] invalidTerms = { "Lyrics", "lyrics", "(Lyrics)", "(lyrics)", "+", "-", "_", "mp4" };
+            string[] terms = title.Split(new char[] { ' ', '.', ',' });
             string searchTerms = "";
             foreach (string term in terms)
             {

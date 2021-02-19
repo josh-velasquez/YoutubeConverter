@@ -1,11 +1,11 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using VideoLibrary;
 
 namespace YoutubeConverter
 {
@@ -14,8 +14,8 @@ namespace YoutubeConverter
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Song songInfo = null;
-        private string downloadUrl = null;
+        private Song song = null;
+        private YouTubeVideo video = null;
         private string targetDir = null;
 
         public MainWindow()
@@ -26,7 +26,6 @@ namespace YoutubeConverter
 
 #if DEBUG
             apiKeyTextBox.Text = "";
-            targetDirTextBox.Text = "C:\\Users\\joshv\\Desktop\\Music";
             urlTextBox.Text = "https://www.youtube.com/watch?v=iqp7oiesrwI&ab_channel=LYRIX";
 #endif
         }
@@ -38,41 +37,6 @@ namespace YoutubeConverter
         {
             string currentDir = Directory.GetCurrentDirectory();
             targetDirTextBox.Text = currentDir;
-        }
-
-        /// <summary>
-        /// Extracts the download url from the resulting html
-        /// </summary>
-        /// <param name = "html" ></ param >
-        /// <returns></returns>
-        private string ExtractUrl(string html)
-        {
-            //Regex regex = new Regex("href=\"(https:\\/\\/s03.ytapivmp3.*?)\"");
-            //Regex regex = new Regex("(https:\\/\\/s02.ytapivmp3.*?)\"");
-            Regex regex = new Regex("href=\"(.*?)\"");
-            return regex.Matches(html)[7].Groups[1].Value;
-        }
-
-        /// <summary>
-        /// Gets the youtube ID from the youtube url
-        /// </summary>
-        /// <param name="url">Url that the id needs to be extracted from</param>
-        /// <returns></returns>
-        private string GetYoutubeId(string url)
-        {
-            Regex regex = new Regex("(?<=v\\=|youtu\\.be\\/)\\w+");
-            return regex.Matches(url)[0].Value;
-        }
-
-        /// <summary>
-        /// Extracts the title of the YouTube video
-        /// </summary>
-        /// <param name="html"></param>
-        /// <returns></returns>
-        private string ExtractTitle(string html)
-        {
-            Regex regex = new Regex("<title>(.*?) \\| 320YouTube<\\/title>");
-            return regex.Matches(html)[0].Groups[1].Value;
         }
 
         /// <summary>
@@ -88,51 +52,27 @@ namespace YoutubeConverter
         }
 
         /// <summary>
-        /// Retrieves all the song information
+        /// Gets the song information using an api
         /// </summary>
-        /// <param name="apikey"></param>
-        /// <param name="url"></param>
-        private bool GetSongInformation(string apikey, string url)
+        /// <param name="songTitle"></param>
+        /// <param name="apiKey"></param>
+        /// <returns></returns>
+        private Song getSongInfo(string songTitle, string apiKey)
         {
-            string youtube320 = "https://www.320youtube.com/watch?v=";
-            API api = new API();
-            songInfo = new Song();
-            string songTitle;
-            try
-            {
-                //Extract youtube ID from url
-                string id = GetYoutubeId(url);
-
-                // Get the html page of the resulting api call to youtube 320
-                UpdateStatusUI("Sending request to YouTube320 Api...");
-                string html = api.GetHtml(youtube320 + id);
-                // Grab title of the song
-                songTitle = ExtractTitle(html);
-
-                // Get the download url from the html page
-                downloadUrl = ExtractUrl(html);
-            }
-            catch (Exception error)
-            {
-                string status = "Failed to get download url.";
-                UpdateStatusUI(status, true);
-                ShowError(status, error.Message.ToString());
-                return false;
-            }
+            Song songInfo = null;
             try
             {
                 // Hit an api to get the song information
                 UpdateStatusUI("Getting song info...");
-                songInfo = api.GetSongInfo(songTitle, apikey);
+                songInfo = API.GetSongInfo(songTitle, apiKey);
             }
             catch (Exception error)
             {
                 string status = "Failed to get song information.";
                 UpdateStatusUI(status, true);
                 ShowError(status, error.Message.ToString());
-                return false;
             }
-            return true;
+            return songInfo;
         }
 
         /// <summary>
@@ -140,67 +80,90 @@ namespace YoutubeConverter
         /// </summary>
         /// <param name="apikey">Key provided by the user (Shazam api key)</param>
         /// <param name="url">YouTube url of the song</param>
-        private void Start(string apikey, string url)
+        private bool Start(string apikey, string url)
         {
             EnableFields(false);
-            if (!GetSongInformation(apikey, url))
+            YouTube youtube = YouTube.Default;
+            video = youtube.GetVideo(url);
+            song = getSongInfo(video.FullName, apikey);
+            if (song == null)
             {
-                return;
+                return false;
             }
-            UpdateSongInfo();
+            UpdateSongInfoDisplay();
             UpdateStatusUI("Verify song information and press Download to continue.");
             EnableFields(true);
+            return true;
         }
 
         /// <summary>
-        /// Downloads the song once the information is verified
+        /// Proceeds with the download of the mp4 file
         /// </summary>
-        private void DownloadSong()
+        private void ContinueDownload()
         {
             EnableFields(false);
-            Files file = new Files();
-            Downloader videoDownloader = new Downloader();
-            string songFilePath;
-            string filePath;
-            if (targetDir == null)
-            {
-                UpdateStatusUI("target dir error", true);
-                return;
-            }
-            if (songInfo == null || targetDir == null || downloadUrl == null)
-            {
-                UpdateStatusUI("Song info error", true);
-                return;
-            }
+            string songLocation = DownloadSong();
+            string mp3File = ConvertFile(songLocation);
+            string newSongLocation = MoveSongLocation(mp3File);
+            UpdateSongInfo(newSongLocation);
+            UpdateStatusUI("Finished. File location: " + newSongLocation);
+        }
+
+        /// <summary>
+        /// Converts mp4 file to mp3
+        /// </summary>
+        /// <param name="songLocation"></param>
+        /// <returns></returns>
+        private string ConvertFile(string songLocation)
+        {
+            string songFilePath = "";
             try
             {
-                UpdateStatusUI("Downloading song " + songInfo.Title + "...");
-                filePath = videoDownloader.Download(downloadUrl, songInfo.Title);
+                // Conver the song to mp3 file
+                songFilePath = Files.ConvertFileToMp3(songLocation);
             }
             catch (Exception error)
             {
-                string status = "Failed to download song";
+                string status = "Failed to convert song to mp3";
                 UpdateStatusUI(status, true);
                 ShowError(status, error.Message.ToString());
-                return;
             }
+            return songFilePath;
+        }
+
+        /// <summary>
+        /// Moves the song location to the album folder
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        private string MoveSongLocation(string filePath)
+        {
+            string songFilePath = "";
             try
             {
                 // Move the song to its album folder
-                songFilePath = file.CreateAndMoveToAlbum(filePath, targetDir, songInfo.Title, songInfo.Album);
+                songFilePath = Files.CreateAndMoveToAlbum(filePath, targetDir, song);
             }
             catch (Exception error)
             {
                 string status = "Failed to move song";
                 UpdateStatusUI(status, true);
                 ShowError(status, error.Message.ToString());
-                return;
             }
+            return songFilePath;
+        }
+
+        /// <summary>
+        /// Updates the file information based on the received song information
+        /// </summary>
+        /// <param name="songLocation"></param>
+        private void UpdateSongInfo(string songLocation)
+        {
             try
             {
                 // Update the file information
                 UpdateStatusUI("Updating file properties...");
-                Mp3.UpdateSongInformation(songFilePath, songInfo);
+                Mp3.UpdateSongInformation(songLocation, song);
             }
             catch (Exception error)
             {
@@ -212,8 +175,7 @@ namespace YoutubeConverter
             {
                 // Remove backup files (.bak)
                 UpdateStatusUI("Cleaning up files...");
-                file.Cleanup(songFilePath);
-                UpdateStatusUI("Finished. File location: " + songFilePath);
+                Files.Cleanup(songLocation);
             }
             catch (Exception error)
             {
@@ -221,9 +183,30 @@ namespace YoutubeConverter
                 UpdateStatusUI(status, true);
                 ShowError(status, error.Message.ToString());
             }
+        }
 
-            songInfo = null;
-            downloadUrl = null;
+        /// <summary>
+        /// Downloads the song once the information is verified
+        /// </summary>
+        private string DownloadSong()
+        {
+            string filePath = "";
+            if (song == null || targetDir == null || video == null)
+            {
+                UpdateStatusUI("Song info error", true);
+            }
+            try
+            {
+                UpdateStatusUI("Downloading song " + song.Title + "...");
+                filePath = Downloader.Download(video.GetBytes(), song.Title, "mp4");
+            }
+            catch (Exception error)
+            {
+                string status = "Failed to download song";
+                UpdateStatusUI(status, true);
+                ShowError(status, error.Message.ToString());
+            }
+            return filePath;
         }
 
         /// <summary>
@@ -256,13 +239,13 @@ namespace YoutubeConverter
         /// Updates the textbox for the song information received from api
         /// </summary>
         /// <param name="song"></param>
-        private void UpdateSongInfo()
+        private void UpdateSongInfoDisplay()
         {
             Dispatcher.Invoke(() =>
             {
-                SongTitleTextBox.Text = songInfo.Title;
-                ArtistTextBox.Text = songInfo.Artist;
-                AlbumTextBox.Text = songInfo.Album;
+                SongTitleTextBox.Text = song.Title;
+                ArtistTextBox.Text = song.Artist;
+                AlbumTextBox.Text = song.Album;
             });
         }
 
@@ -291,8 +274,6 @@ namespace YoutubeConverter
             SongTitleTextBox.Text = "";
             ArtistTextBox.Text = "";
             AlbumTextBox.Text = "";
-            songInfo = null;
-            downloadUrl = null;
             EnableFields(false);
         }
 
@@ -303,7 +284,7 @@ namespace YoutubeConverter
         /// <param name="e"></param>
         private void OnDownloadClick(object sender, RoutedEventArgs e)
         {
-            new Thread(() => DownloadSong()).Start();
+            new Thread(() => ContinueDownload()).Start();
         }
 
         /// <summary>
@@ -341,15 +322,14 @@ namespace YoutubeConverter
                 }
                 UpdateStatusUI("Reading file urls...");
                 fileName = ofd.FileName;
-                Files files = new Files();
                 string apiKey = apiKeyTextBox.Text;
                 string dir = targetDirTextBox.Text;
                 new Thread(() =>
                 {
-                    foreach (string url in files.ExtractUrls(ofd.FileName))
+                    foreach (string url in Files.ExtractUrls(ofd.FileName))
                     {
                         targetDir = dir;
-                        if (!GetSongInformation(apiKey, url))
+                        if (!Start(apiKey, url))
                         {
                             UpdateStatusUI("Failed to get song information for: " + url);
                         }
