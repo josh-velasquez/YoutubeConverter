@@ -19,7 +19,13 @@ namespace YoutubeConverter
         /// <returns></returns>
         public static string CreateAndMoveToAlbum(string filePath, string targetDir, Song song)
         {
-            string newDir = targetDir + "\\" + song.Album;
+            string[] invalidSymbols = { "*", ".", "\"", "/", "\\", "[", "]", ":", ";", "|", "," };
+            string album = song.Album;
+            foreach (var symbol in invalidSymbols)
+            {
+                album = album.Replace(symbol, string.Empty);
+            }
+            string newDir = targetDir + "\\" + album;
             if (!Directory.Exists(newDir))
             {
                 try
@@ -54,14 +60,14 @@ namespace YoutubeConverter
         /// <summary>
         /// Removes any .bak files that are created when moving the song file
         /// </summary>
-        /// <param name="filePath">File path to remove the .bak files from</param>
-        public static void Cleanup(string filePath)
+        /// <param name="filePath">File path to remove files from</param>
+        public static void Cleanup(string filePath, string fileExt)
         {
             string parentDir = Directory.GetParent(filePath).FullName;
             string[] files = Directory.GetFiles(parentDir);
             foreach (string file in files)
             {
-                if (Path.GetExtension(file) == ".bak")
+                if (Path.GetExtension(file) == fileExt)
                 {
                     File.Delete(file);
                 }

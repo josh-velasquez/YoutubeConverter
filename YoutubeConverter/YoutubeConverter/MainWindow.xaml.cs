@@ -25,7 +25,7 @@ namespace YoutubeConverter
             SetDefaultDirectory();
 
 #if DEBUG
-            apiKeyTextBox.Text = "";
+            apiKeyTextBox.Text = "320d5e38afmsh4303ea9c1b8f26dp1ba115jsnee49a5333256";
             urlTextBox.Text = "https://www.youtube.com/watch?v=iqp7oiesrwI&ab_channel=LYRIX";
 #endif
         }
@@ -103,8 +103,20 @@ namespace YoutubeConverter
         {
             EnableFields(false);
             string songLocation = DownloadSong();
+            if (songLocation == "")
+            {
+                return;
+            }
             string mp3File = ConvertFile(songLocation);
+            if (mp3File == "")
+            {
+                return;
+            }
             string newSongLocation = MoveSongLocation(mp3File);
+            if (newSongLocation == "")
+            {
+                return;
+            }
             UpdateSongInfo(newSongLocation);
             UpdateStatusUI("Finished. File location: " + newSongLocation);
         }
@@ -125,6 +137,18 @@ namespace YoutubeConverter
             catch (Exception error)
             {
                 string status = "Failed to convert song to mp3";
+                UpdateStatusUI(status, true);
+                ShowError(status, error.Message.ToString());
+            }
+            try
+            {
+                // Remove backup files (.mp4)
+                UpdateStatusUI("Cleaning up files...");
+                Files.Cleanup(songLocation, ".mp4");
+            }
+            catch (Exception error)
+            {
+                string status = "Failed to remove mp4 file";
                 UpdateStatusUI(status, true);
                 ShowError(status, error.Message.ToString());
             }
@@ -175,7 +199,7 @@ namespace YoutubeConverter
             {
                 // Remove backup files (.bak)
                 UpdateStatusUI("Cleaning up files...");
-                Files.Cleanup(songLocation);
+                Files.Cleanup(songLocation, ".bak");
             }
             catch (Exception error)
             {
