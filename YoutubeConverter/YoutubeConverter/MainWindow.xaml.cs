@@ -25,7 +25,7 @@ namespace YoutubeConverter
             SetDefaultDirectory();
 
 #if DEBUG
-            apiKeyTextBox.Text = "320d5e38afmsh4303ea9c1b8f26dp1ba115jsnee49a5333256";
+            apiKeyTextBox.Text = "";
             urlTextBox.Text = "https://www.youtube.com/watch?v=iqp7oiesrwI&ab_channel=LYRIX";
 #endif
         }
