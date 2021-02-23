@@ -13,7 +13,9 @@
                     <Run Text="Paste your Shazam API Key to the field. This program will query the Shazam API to retrieve song information based on your url(s)" />
                 </Paragraph>
                 <Paragraph>
-                    <Run Text="Enter the Youtube url of the song you want to download and convert to an MP3 file. Once you have entered your url, press the find button to retrieve the song information. Verify that the song information is correct so that the right information is edited into the MP3 file of the song." />
+                    <Run Text="Enter the Youtube url of the song you want to download and convert to an MP3 file. " />
+                    <Run Text="You can enter the title and artist of the song to further specify the search function and get better results. " />
+                    <Run Text="Once you have entered your url, press the convert button to retrieve the song information. Verify that the song information is correct so that the right information is edited into the MP3 file of the song." />
                 </Paragraph>
                 <Paragraph>
                     <Run Text="Once verified, press the download button to download the song and save it with the song information shown." />

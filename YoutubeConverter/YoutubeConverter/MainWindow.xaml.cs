@@ -23,11 +23,24 @@ namespace YoutubeConverter
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             SetDefaultDirectory();
+            SetApiKey();
 
 #if DEBUG
-            apiKeyTextBox.Text = "";
+            //apiKeyTextBox.Text = string.Empty;
+            //apiKeyTextBox.Text = "";
             urlTextBox.Text = "https://www.youtube.com/watch?v=iqp7oiesrwI&ab_channel=LYRIX";
 #endif
+        }
+
+        private void SetApiKey()
+        {
+            var apiKey = Config.GetApiKey();
+            var remembered = Config.RememberApiKey();
+            RememberApiKeyCheckBox.IsChecked = remembered;
+            if (apiKey != string.Empty)
+            {
+                apiKeyTextBox.Text = apiKey;
+            }
         }
 
         /// <summary>
@@ -80,14 +93,26 @@ namespace YoutubeConverter
         /// </summary>
         /// <param name="apikey">Key provided by the user (Shazam api key)</param>
         /// <param name="url">YouTube url of the song</param>
-        private bool Start(string apikey, string url)
+        private bool Start(string apikey, string url, string searchTerms = "")
         {
             EnableFields(false);
             YouTube youtube = YouTube.Default;
             video = youtube.GetVideo(url);
-            song = getSongInfo(video.FullName, apikey);
+            if (searchTerms.Trim() == string.Empty)
+            {
+                song = getSongInfo(video.FullName, apikey);
+            }
+            else
+            {
+                song = getSongInfo(searchTerms, apikey);
+            }
+
             if (song == null)
             {
+                var status = "No song found";
+                var message = "Enter a valid title and/or artist to specify song.";
+                ShowError(status, message);
+                UpdateStatusUI("Invalid song title and/or artist.", true);
                 return false;
             }
             UpdateSongInfoDisplay();
@@ -103,17 +128,17 @@ namespace YoutubeConverter
         {
             EnableFields(false);
             string songLocation = DownloadSong();
-            if (songLocation == "")
+            if (songLocation == string.Empty)
             {
                 return;
             }
             string mp3File = ConvertFile(songLocation);
-            if (mp3File == "")
+            if (mp3File == string.Empty)
             {
                 return;
             }
             string newSongLocation = MoveSongLocation(mp3File);
-            if (newSongLocation == "")
+            if (newSongLocation == string.Empty)
             {
                 return;
             }
@@ -128,7 +153,7 @@ namespace YoutubeConverter
         /// <returns></returns>
         private string ConvertFile(string songLocation)
         {
-            string songFilePath = "";
+            string songFilePath = string.Empty;
             try
             {
                 // Conver the song to mp3 file
@@ -162,7 +187,7 @@ namespace YoutubeConverter
         /// <returns></returns>
         private string MoveSongLocation(string filePath)
         {
-            string songFilePath = "";
+            string songFilePath = string.Empty;
             try
             {
                 // Move the song to its album folder
@@ -214,7 +239,7 @@ namespace YoutubeConverter
         /// </summary>
         private string DownloadSong()
         {
-            string filePath = "";
+            string filePath = string.Empty;
             if (song == null || targetDir == null || video == null)
             {
                 UpdateStatusUI("Song info error", true);
@@ -275,7 +300,7 @@ namespace YoutubeConverter
 
         private void OnConvertClick(object sender, RoutedEventArgs e)
         {
-            if (apiKeyTextBox.Text == "" || targetDirTextBox.Text == "" || urlTextBox.Text == "")
+            if (apiKeyTextBox.Text == string.Empty || targetDirTextBox.Text == string.Empty || urlTextBox.Text == string.Empty)
             {
                 ShowError("Field Value Missing", "Enter a value into the appropriate field");
                 return;
@@ -283,7 +308,9 @@ namespace YoutubeConverter
             string apiKey = apiKeyTextBox.Text;
             targetDir = targetDirTextBox.Text;
             string url = urlTextBox.Text;
-            new Thread(() => Start(apiKey, url)).Start();
+            var searchTerm = TitleKeyTermTextBox.Text + " " + ArtistKeyTermTextBox.Text;
+
+            new Thread(() => Start(apiKey, url, searchTerm)).Start();
         }
 
         /// <summary>
@@ -293,11 +320,13 @@ namespace YoutubeConverter
         /// <param name="e"></param>
         private void OnClearClick(object sender, RoutedEventArgs e)
         {
-            urlTextBox.Text = "";
+            urlTextBox.Text = string.Empty;
             statusListBox.Items.Clear();
-            SongTitleTextBox.Text = "";
-            ArtistTextBox.Text = "";
-            AlbumTextBox.Text = "";
+            SongTitleTextBox.Text = string.Empty;
+            ArtistTextBox.Text = string.Empty;
+            AlbumTextBox.Text = string.Empty;
+            TitleKeyTermTextBox.Text = string.Empty;
+            ArtistKeyTermTextBox.Text = string.Empty;
             EnableFields(false);
         }
 
@@ -318,7 +347,7 @@ namespace YoutubeConverter
         /// <param name="e"></param>
         private void OnImportClick(object sender, RoutedEventArgs e)
         {
-            if (apiKeyTextBox.Text == "" || targetDirTextBox.Text == "")
+            if (apiKeyTextBox.Text == string.Empty || targetDirTextBox.Text == string.Empty)
             {
                 ShowError("Field Value Missing", "Enter a value into the appropriate field");
                 return;
@@ -339,7 +368,7 @@ namespace YoutubeConverter
                     DefaultExt = "txt",
                     Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"
                 };
-                string fileName = "";
+                string fileName = string.Empty;
                 if (ofd.ShowDialog() != true)
                 {
                     return;
@@ -386,6 +415,20 @@ namespace YoutubeConverter
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             help.Show();
+        }
+
+        private void OnUncheckRememberApiKey(object sender, RoutedEventArgs e)
+        {
+            Config.DeleteApiKey();
+        }
+
+        private void OnCheckRememberApiKey(object sender, RoutedEventArgs e)
+        {
+            string apiKey = apiKeyTextBox.Text;
+            if (apiKey != string.Empty)
+            {
+                Config.SaveApiKey(apiKey);
+            }
         }
     }
 }

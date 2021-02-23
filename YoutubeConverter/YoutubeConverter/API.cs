@@ -51,6 +51,11 @@ namespace YoutubeConverter
                 new KeyValuePair<string, string>("x-rapidapi-key", apiKey)
             };
             string songInfo = GetHtml(searchTrackUrl, headers);
+            // Check if there is no song retrieved
+            if (songInfo == "{}")
+            {
+                return null;
+            }
             Song song = GetSongInfo(songInfo);
             string albumUrl = albumRootUrl + song.KeyId;
             string albumInfo = GetHtml(albumUrl, headers);
@@ -68,6 +73,18 @@ namespace YoutubeConverter
             dynamic result = JsonConvert.DeserializeObject(html);
             string album = result.sections[0].metadata[0].text;
             return album;
+        }
+
+        /// <summary>
+        /// Gets the lyrics of the song (uses the same html from the albumUrl result)
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
+        private static string GetLyrics(string html)
+        {
+            dynamic result = JsonConvert.DeserializeObject(html);
+            string lyrics = result.sections[1].text;
+            return lyrics;
         }
 
         /// <summary>
