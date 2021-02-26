@@ -52,9 +52,5 @@ F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\Y
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\YoutubeConverter.csproj.CopyComplete
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\YoutubeConverter.exe
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\YoutubeConverter.pdb
-F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\System.Security.AccessControl.dll
-F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\System.Security.Permissions.dll
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\System.Security.Principal.Windows.dll
-F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\System.Security.AccessControl.xml
-F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\System.Security.Permissions.xml
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\System.Security.Principal.Windows.xml

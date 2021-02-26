@@ -24,12 +24,6 @@ namespace YoutubeConverter
             InitializeComponent();
             SetDefaultDirectory();
             SetApiKey();
-
-#if DEBUG
-            //apiKeyTextBox.Text = string.Empty;
-            //apiKeyTextBox.Text = "";
-            urlTextBox.Text = "https://www.youtube.com/watch?v=iqp7oiesrwI&ab_channel=LYRIX";
-#endif
         }
 
         private void SetApiKey()
