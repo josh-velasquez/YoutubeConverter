@@ -43,6 +43,11 @@ namespace YoutubeConverter
             return newFilePath;
         }
 
+        /// <summary>
+        /// Converts file (mp4) to mp3
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public static string ConvertFileToMp3(string fileName)
         {
             var newFileName = fileName.Split('.')[0];

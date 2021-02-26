@@ -26,6 +26,9 @@ namespace YoutubeConverter
             SetApiKey();
         }
 
+        /// <summary>
+        /// Checks if an api key was remembered from before
+        /// </summary>
         private void SetApiKey()
         {
             var apiKey = Config.GetApiKey();
@@ -292,6 +295,11 @@ namespace YoutubeConverter
             });
         }
 
+        /// <summary>
+        /// Called the start function which runs it on a different thread
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnConvertClick(object sender, RoutedEventArgs e)
         {
             if (apiKeyTextBox.Text == string.Empty || targetDirTextBox.Text == string.Empty || urlTextBox.Text == string.Empty)
@@ -411,11 +419,21 @@ namespace YoutubeConverter
             help.Show();
         }
 
+        /// <summary>
+        /// Deletes the saved api key if there is
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnUncheckRememberApiKey(object sender, RoutedEventArgs e)
         {
             Config.DeleteApiKey();
         }
 
+        /// <summary>
+        /// Saves the api key if the user wants the api key remembered
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnCheckRememberApiKey(object sender, RoutedEventArgs e)
         {
             string apiKey = apiKeyTextBox.Text;

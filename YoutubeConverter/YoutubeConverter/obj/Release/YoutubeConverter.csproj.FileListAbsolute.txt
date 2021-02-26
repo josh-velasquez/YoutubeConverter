@@ -32,11 +32,9 @@ F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\l
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\MediaToolkit.dll
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\Mp3Lib.dll
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\Newtonsoft.Json.dll
-F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\System.Diagnostics.DiagnosticSource.dll
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\Id3Lib.pdb
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\Mp3Lib.pdb
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\Newtonsoft.Json.xml
-F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\System.Diagnostics.DiagnosticSource.xml
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\YoutubeConverter.csprojAssemblyReference.cache
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\MainWindow.baml
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\Help.g.cs
@@ -52,5 +50,3 @@ F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\Y
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\YoutubeConverter.csproj.CopyComplete
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\YoutubeConverter.exe
 F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\obj\Release\YoutubeConverter.pdb
-F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\System.Security.Principal.Windows.dll
-F:\Repositories\YoutubeConverter\YoutubeConverter\YoutubeConverter\bin\Release\System.Security.Principal.Windows.xml
